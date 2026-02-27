@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Workflow Editor</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Подключаем LiteGraph библиотеку -->
+    <script src="https://cdn.jsdelivr.net/npm/litegraph.js@0.7.0/build/litegraph.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Image Processing Workflow Editor</h1>
+        <p>Connect nodes to create image processing pipelines</p>
+    </header>
+
+    <div class="app-container">
+        <aside class="tool-panel">
+            <h3>Tools</h3>
+            <div class="node-category">
+                <h4>Input</h4>
+                <div class="node-item" data-type="image-input">Load Image</div>
+            </div>
+            <div class="node-category">
+                <h4>Filters</h4>
+                <div class="node-item" data-type="blur-filter">Blur</div>
+                <div class="node-item" data-type="brightness-filter">Brightness</div>
+                <div class="node-item" data-type="contrast-filter">Contrast</div>
+            </div>
+            <div class="node-category">
+                <h4>Output</h4>
+                <div class="node-item" data-type="image-output">Preview</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div id="graph-canvas" class="graph-container"></div>
+        </main>
+
+        <aside class="preview-panel">
+            <h3>Preview</h3>
+            <canvas id="output-preview" width="300" height="200"></canvas>
+            <button id="run-workflow">Run Workflow</button>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
