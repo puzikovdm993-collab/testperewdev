@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     graph = new LGraph();
     
     // Создаем холст
-    canvas = new LGraphCanvas("#graph-canvas", graph);
+    canvas = new LGraphCanvas(document.getElementById("graph-canvas"), graph);
     
     // Настройки холста
     canvas.allow_dragcanvas = true;
