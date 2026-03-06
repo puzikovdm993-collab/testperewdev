@@ -378,7 +378,7 @@ body {
 .canvas-wrapper {
     background: var(--background-secondary);
     box-shadow: var(--shadow-xl);
-    border-radius: var(--radius-lg);
+    border-radius: 0;
     position: relative;
     display: inline-block;
     overflow: hidden;
