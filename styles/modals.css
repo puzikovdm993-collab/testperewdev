@@ -1,7 +1,18 @@
-/* modals.css */
+/* modals.css - Clean UI / Linear style */
+
+:root {
+    --modal-bg: #ffffff;
+    --modal-border: #e4e4e7;
+    --modal-header-bg: #fafafa;
+    --modal-text: #18181b;
+    --modal-text-muted: #71717a;
+    --modal-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    --modal-radius: 6px;
+}
+
 .modal {
-    display: none;          /* по умолчанию скрыто */
-    position: fixed;        /* фиксированное позиционирование */
+    display: none;
+    position: fixed;
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -11,57 +22,65 @@
     display: flex;
 }
 
-/* Контент модалки — теперь абсолютно позиционирован для перемещения */
+/* Контент модалки */
 .modal-content {
-    position: fixed;        /* перемещаем относительно окна */
-    background: #f0f0f0;
-    border: 1px solid #666;
-    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
-    min-width: 300px;
+    position: fixed;
+    background: var(--modal-bg);
+    border: 1px solid var(--modal-border);
+    box-shadow: var(--modal-shadow);
+    min-width: 320px;
     min-height: 200px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;       /* скрываем выступающее содержимое */
-    left: 100px;            /* начальная позиция */
+    overflow: hidden;
+    left: 100px;
     top: 100px;
+    border-radius: var(--modal-radius);
 }
 
 /* Заголовок — область перетаскивания */
 .modal-title {
-    background: linear-gradient(180deg, #4a90d9 0%, #2570be 100%);
-    color: white;
-    padding: 6px 10px;
+    background: var(--modal-header-bg);
+    color: var(--modal-text);
+    padding: 8px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: grab;
     user-select: none;
+    border-bottom: 1px solid var(--modal-border);
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 .modal-title:active {
     cursor: grabbing;
 }
 
-/* Тело модалки занимает всё оставшееся место */
+/* Тело модалки */
 .modal-body {
     flex: 1;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    min-height: 0;          /* важно для flex-детей */
+    min-height: 0;
+    background: var(--modal-bg);
 }
 
 /* Контейнер для графика */
-.modal-graph-container {
+.modal-graph-container,
+.graph-container {
     flex: 1;
     min-height: 0;
-    background: white;
-    border: 1px solid #ccc;
+    background: #f4f4f5;
+    border: 1px solid var(--modal-border);
     position: relative;
     overflow: hidden;
+    border-radius: 4px;
 }
 
-/* Canvas графика */
 #graphCanvas {
     display: block;
     width: 100%;
@@ -70,22 +89,64 @@
 
 /* Кнопки модалки */
 .modal-buttons {
-    padding: 10px;
+    padding: 12px 16px;
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--modal-border);
+    background: var(--modal-header-bg);
 }
 
 .modal-btn {
-    padding: 6px 20px;
-    border: 1px solid #666;
-    background: linear-gradient(180deg, #f5f5f5 0%, #ddd 100%);
+    height: 28px;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--modal-border);
+    background: var(--modal-bg);
+    color: var(--modal-text);
+    border-radius: 4px;
     cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    outline: none;
 }
 
 .modal-btn:hover {
-    background: linear-gradient(180deg, #fff 0%, #eee 100%);
+    background: #f4f4f5;
+    border-color: #d4d4d8;
+    transform: translateY(-1px);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+    background: #fafafa;
+}
+
+.modal-btn.primary {
+    background: var(--modal-text);
+    border-color: var(--modal-text);
+    color: #ffffff;
+}
+
+.modal-btn.primary:hover {
+    background: #000;
+    border-color: #000;
+    opacity: 0.9;
+}
+
+.modal-btn.danger {
+    color: #ef4444;
+    border-color: #fee2e2;
+    background: #fef2f2;
+}
+
+.modal-btn.danger:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
 }
 
 /* Ручка изменения размера */
@@ -96,7 +157,7 @@
     width: 16px;
     height: 16px;
     cursor: se-resize;
-    background: rgba(0, 0, 0, 0.1);
+    background: transparent;
     z-index: 10;
 }
 
@@ -107,117 +168,33 @@
     bottom: 4px;
     width: 8px;
     height: 8px;
-    border-right: 2px solid #666;
-    border-bottom: 2px solid #666;
-}
-/* modals.css – добавьте или замените существующие правила */
-
-.modal-content {
-    position: fixed;
-    background: #f0f0f0;
-    border: 1px solid #666;
-    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
-    min-width: 300px;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    left: 100px;
-    top: 100px;
+    border-right: 2px solid var(--modal-text-muted);
+    border-bottom: 2px solid var(--modal-text-muted);
+    opacity: 0.4;
 }
 
-.modal-title {
-    background: linear-gradient(180deg, #4a90d9 0%, #2570be 100%);
-    color: white;
-    padding: 6px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: grab;
-    user-select: none;
-    flex-shrink: 0;
-}
-
-.modal-body {
-    flex: 1;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-
-.graph-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-
-.graph-panel h3 {
-    flex-shrink: 0;
-    margin-bottom: 8px;
-}
-
-.graph-container {
-    flex: 1;
-    min-height: 0;
-    background: white;
-    border: 1px solid #ccc;
-    position: relative;
-}
-
-#graphCanvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.modal-resize-handle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 16px;
-    height: 16px;
-    cursor: se-resize;
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 10;
-}
-
-.modal-resize-handle::after {
-    content: '';
-    position: absolute;
-    right: 4px;
-    bottom: 4px;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid #666;
-    border-bottom: 2px solid #666;
-}
-
-/* Кнопка закрытия в заголовке модального окна */
+/* Кнопка закрытия в заголовке */
 .modal-title button {
-    background: none;
+    background: transparent;
     border: none;
-    color: white;
+    color: var(--modal-text-muted);
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 16px;
     line-height: 1;
-    padding: 4px 8px;          /* увеличиваем область наведения */
-    border-radius: 3px;
-    transition: background-color 0.2s ease;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-title button:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* полупрозрачная белая подсветка */
-}
-.modal-body {
-    flex: 1;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
+    background: #e4e4e7;
+    color: var(--modal-text);
 }
 
+/* Graph panel styles */
 .graph-panel {
     flex: 1;
     display: flex;
@@ -228,18 +205,7 @@
 .graph-panel h3 {
     flex-shrink: 0;
     margin-bottom: 8px;
-}
-
-.graph-container {
-    flex: 1;
-    min-height: 0;
-    background: white;
-    border: 1px solid #ccc;
-    position: relative;
-}
-
-#graphCanvas {
-    width: 100%;
-    height: 100%;
-    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--modal-text);
 }
