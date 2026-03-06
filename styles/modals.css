@@ -1,7 +1,7 @@
 /* modals.css */
 .modal {
-    display: none;
-    position: fixed;
+    display: none;          /* по умолчанию скрыто */
+    position: fixed;        /* фиксированное позиционирование */
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -13,32 +13,29 @@
 
 /* Контент модалки — теперь абсолютно позиционирован для перемещения */
 .modal-content {
-    position: fixed;
-    background: var(--background-secondary);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-xl);
-    min-width: 320px;
-    min-height: 220px;
+    position: fixed;        /* перемещаем относительно окна */
+    background: #f0f0f0;
+    border: 1px solid #666;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    min-width: 300px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    left: 100px;
+    overflow: hidden;       /* скрываем выступающее содержимое */
+    left: 100px;            /* начальная позиция */
     top: 100px;
-    border-radius: var(--radius-lg);
 }
 
 /* Заголовок — область перетаскивания */
 .modal-title {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    background: linear-gradient(180deg, #4a90d9 0%, #2570be 100%);
     color: white;
-    padding: 10px 14px;
+    padding: 6px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: grab;
     user-select: none;
-    font-weight: 600;
-    font-size: 14px;
 }
 
 .modal-title:active {
@@ -51,8 +48,7 @@
     padding: 16px;
     display: flex;
     flex-direction: column;
-    min-height: 0;
-    background: var(--background-tertiary);
+    min-height: 0;          /* важно для flex-детей */
 }
 
 /* Контейнер для графика */
@@ -60,10 +56,9 @@
     flex: 1;
     min-height: 0;
     background: white;
-    border: 1px solid var(--border-color);
+    border: 1px solid #ccc;
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius-md);
 }
 
 /* Canvas графика */
@@ -75,42 +70,22 @@
 
 /* Кнопки модалки */
 .modal-buttons {
-    padding: 12px 16px;
+    padding: 10px;
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    border-top: 1px solid var(--border-color);
-    background: var(--background-secondary);
+    border-top: 1px solid #ccc;
 }
 
 .modal-btn {
-    padding: 8px 20px;
-    border: 1px solid var(--border-color);
-    background: var(--background-secondary);
+    padding: 6px 20px;
+    border: 1px solid #666;
+    background: linear-gradient(180deg, #f5f5f5 0%, #ddd 100%);
     cursor: pointer;
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-primary);
-    transition: all var(--transition-fast);
 }
 
 .modal-btn:hover {
-    background: var(--primary-light);
-    border-color: var(--primary-color);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-}
-
-.modal-btn.primary {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-hover);
-}
-
-.modal-btn.primary:hover {
-    background: var(--primary-hover);
-    border-color: var(--primary-hover);
+    background: linear-gradient(180deg, #fff 0%, #eee 100%);
 }
 
 /* Ручка изменения размера */
@@ -121,7 +96,7 @@
     width: 16px;
     height: 16px;
     cursor: se-resize;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
 
@@ -132,25 +107,43 @@
     bottom: 4px;
     width: 8px;
     height: 8px;
-    border-right: 2px solid var(--text-secondary);
-    border-bottom: 2px solid var(--text-secondary);
+    border-right: 2px solid #666;
+    border-bottom: 2px solid #666;
+}
+/* modals.css – добавьте или замените существующие правила */
+
+.modal-content {
+    position: fixed;
+    background: #f0f0f0;
+    border: 1px solid #666;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    min-width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    left: 100px;
+    top: 100px;
 }
 
-/* Кнопка закрытия в заголовке модального окна */
-.modal-title button {
-    background: none;
-    border: none;
+.modal-title {
+    background: linear-gradient(180deg, #4a90d9 0%, #2570be 100%);
     color: white;
-    cursor: pointer;
-    font-size: 1.2em;
-    line-height: 1;
-    padding: 4px 8px;
-    border-radius: var(--radius-sm);
-    transition: background-color 0.2s ease;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    user-select: none;
+    flex-shrink: 0;
 }
 
-.modal-title button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.modal-body {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 .graph-panel {
@@ -169,9 +162,80 @@
     flex: 1;
     min-height: 0;
     background: white;
-    border: 1px solid var(--border-color);
+    border: 1px solid #ccc;
     position: relative;
-    border-radius: var(--radius-md);
+}
+
+#graphCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.modal-resize-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    cursor: se-resize;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.modal-resize-handle::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #666;
+    border-bottom: 2px solid #666;
+}
+
+/* Кнопка закрытия в заголовке модального окна */
+.modal-title button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2em;
+    line-height: 1;
+    padding: 4px 8px;          /* увеличиваем область наведения */
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.modal-title button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* полупрозрачная белая подсветка */
+}
+.modal-body {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.graph-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.graph-panel h3 {
+    flex-shrink: 0;
+    margin-bottom: 8px;
+}
+
+.graph-container {
+    flex: 1;
+    min-height: 0;
+    background: white;
+    border: 1px solid #ccc;
+    position: relative;
 }
 
 #graphCanvas {
