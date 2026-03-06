@@ -1,0 +1,1226 @@
+/*index.css*/
+/* Общий сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+}
+
+body {
+    background: #f0f0f0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Стили для панели вкладок файлов */
+.tab-bar {
+    background: #e0e0e0;
+    border-bottom: 1px solid #bbb;
+    display: flex;
+    padding: 2px 4px;
+    gap: 2px;
+    height: 26px;
+}
+
+.tab {
+    background: #f0f0f0;
+    border: 1px solid #aaa;
+    border-bottom: none;
+    padding: 0 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 3px 3px 0 0;
+    user-select: none;
+}
+
+.tab.active {
+    background: white;
+    border-color: #666;
+}
+
+.tab-close {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.tab-close:hover {
+    opacity: 1;
+}
+
+/* Заголовок окна в стиле Windows */
+.window-title {
+    background: linear-gradient(180deg, #4a90d9 0%, #2570be 50%, #1e5aa8 100%);
+    color: white;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.window-title-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.window-buttons {
+    display: flex;
+    gap: 2px;
+}
+
+.window-btn {
+    width: 28px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Кнопки заголовка окна */
+.btn-minimize {
+    background: linear-gradient(180deg, #f5f5f5 0%, #ddd 100%);
+}
+
+.btn-maximize {
+    background: linear-gradient(180deg, #f5f5f5 0%, #ddd 100%);
+}
+
+.btn-close {
+    background: linear-gradient(180deg, #e57373 0%, #c62828 100%);
+    color: white;
+}
+
+/* Панель меню */
+.menu-bar {
+    background: linear-gradient(180deg, #f6f6f6 0%, #ebebeb 100%);
+    border-bottom: 1px solid #bbb;
+    padding: 2px 4px;
+    display: flex;
+    gap: 2px;
+}
+
+.menu-item {
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    user-select: none;
+}
+
+.menu-item:hover {
+    background: #e5f3ff;
+    border: 1px solid #cce4f7;
+    padding: 3px 9px;
+}
+
+/* Ribbon-панель (интерфейс в стиле Office 2007/2010) */
+.ribbon {
+    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+    border-bottom: 1px solid #bbb;
+    padding: 4px 8px;
+    display: flex;
+    gap: 16px;
+}
+
+.ribbon-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 12px;
+    border-right: 1px solid #ddd;
+}
+
+.ribbon-group:last-child {
+    border-right: none;
+}
+
+.ribbon-group-title {
+    font-size: 10px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.ribbon-buttons {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ribbon-btn {
+    /* Основные размеры кнопки */
+    width: 1em;         /* Ширина кнопки (3 единицы шрифта) */
+    height: 1em;        /* Высота кнопки (3 единицы шрифта) */
+    /* min-width: 32px;    Минимальная ширина (32 пикселя) */
+    /* min-height: 32px;   Минимальная высота (32 пикселя) */
+    max-width: 100%;    /* Максимальная ширина — 100% от контейнера */
+    max-height: 100%;   /* Максимальная высота — 100% от контейнера */
+
+    /* Визуальные свойства */
+    border: 1px solid transparent;  /* Прозрачная граница (можно использовать для hover-эффектов) */
+    background: #ffffff;          /* Цвет фона для видимости кнопки */
+    cursor: pointer;                /* Курсор в виде руки при наведении (указывает на интерактивность) */
+    user-select: none;              /* Запрещает выделение текста внутри кнопки */
+    
+    /* Гибкая верстка (Flexbox) */
+    display: flex;           /* Включает Flexbox для удобного позиционирования содержимого */
+    align-items: center;     /* Вертикальное центрирование контента */
+    justify-content: center; /* Горизонтальное центрирование контента */
+
+    /* Стилизация формы и текста */
+    border-radius: 8px;  /* Скругление углов кнопки (8px) */
+    font-size: 16px;     /* Размер шрифта текста внутри кнопки */
+    
+    /* Управление переполнением и пробелами */
+    overflow: visible;      /* Содержимое может выходить за границы (например, для эффектов) */
+    white-space: nowrap;    /* Текст не переносится на следующую строку */
+}
+
+
+
+.ribbon-btn:hover {
+    background: #e0e0e0; /* Более темный фон при наведении */
+    border-color: #888;  /* Появление серой границы */
+    transform: scale(1.02); /* Легкое увеличение кнопки */
+    transition: all 0.2s ease; /* Плавность анимации */
+}
+
+.ribbon-btn.active {
+    background: #cce4f7;
+    border-color: #99d1ff;
+}
+
+.ribbon-btn-large {
+    width: 50px;
+    height: 50px;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.ribbon-btn-label {
+    font-size: 9px;
+    margin-top: 2px;
+}
+.ribbon-btn img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Сохраняет пропорции */
+}
+
+/* Основная рабочая область */
+.main-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Левая панель инструментов */
+.toolbar-left {
+    width: 58px;
+    background: #f0f0f0;
+    border-right: 1px solid #bbb;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tool-btn {
+    width: 48px;
+    height: 36px;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-size: 18px;
+    user-select: none;
+}
+
+.tool-btn:hover {
+    background: #e5f3ff;
+    border-color: #cce4f7;
+}
+
+.tool-btn.active {
+    background: #cce4f7;
+    border-color: #99d1ff;
+}
+
+.tool-separator {
+    height: 1px;
+    background: #ccc;
+    margin: 4px 0;
+}
+
+/* Область холста для рисования */
+.canvas-area {
+    flex: 1;
+    background: #a0a0a0;
+    overflow: auto;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.canvas-wrapper {
+    background: white;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.paint-canvas {
+    display: block;
+    cursor: crosshair;
+}
+
+/* Палитра цветов (нижняя часть) */
+.color-palette {
+    background: #f0f0f0;
+    border-top: 1px solid #bbb;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.current-colors {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.color-preview {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.color-primary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #666;
+    background: #000;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.color-secondary {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #666;
+    background: #fff;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.palette-colors {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1px;
+}
+
+.palette-color {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #888;
+    cursor: pointer;
+}
+
+.palette-color:hover {
+    border-color: #333;
+    transform: scale(1.1);
+}
+
+/* Панель размеров кисти */
+.brush-sizes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.brush-size-btn {
+    border: 1px solid #999;
+    background: white;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.brush-size-btn:hover, .brush-size-btn.active {
+    border-color: #0078d7;
+    background: #e5f3ff;
+}
+
+/* Строка состояния */
+.status-bar {
+    background: #f0f0f0;
+    border-top: 1px solid #bbb;
+    padding: 2px 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #666;
+}
+
+.status-left {
+    display: flex;
+    gap: 20px;
+}
+
+
+
+/* Выпадающие меню */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #999;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    z-index: 100;
+    min-width: 180px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    position: relative;
+}
+
+.dropdown-item:hover {
+    background: #e5f3ff;
+}
+
+.dropdown-separator {
+    height: 1px;
+    background: #ccc;
+    margin: 2px 0;
+}
+
+.dropdown-item img {
+    max-width: 15px;
+    max-height: 15px;
+    object-fit: contain; /* Сохраняет пропорции */
+}
+
+/* Подменю (выпадающие меню второго уровня) */
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    border: 1px solid #999;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    z-index: 101;
+    min-width: 160px;
+}
+
+.dropdown-submenu:hover .dropdown-submenu-content {
+    display: block;
+}
+
+.dropdown-submenu .dropdown-item::after {
+    margin-left: auto;
+    font-size: 10px;
+    color: #666;
+}
+
+/* Панель фигур (подменю) */
+.shapes-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #999;
+    padding: 8px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.shapes-panel.active {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.shape-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+}
+
+.shape-btn:hover {
+    background: #e5f3ff;
+    border-color: #99d1ff;
+}
+
+.shape-btn.active {
+    background: #cce4f7;
+    border-color: #0078d7;
+}
+
+/* Скрытый input для загрузки файлов */
+input[type="file"] {
+    display: none;
+}
+
+/* Область ввода текста */
+.text-input-overlay {
+    position: absolute;
+    display: none;
+    z-index: 20;
+}
+
+.text-input-overlay textarea {
+    border: 1px dashed #0078d7;
+    background: rgba(255,255,255,0.9);
+    resize: both;
+    min-width: 100px;
+    min-height: 30px;
+    font-family: Arial, sans-serif;
+    outline: none;
+}
+
+.btn-link {
+    text-decoration: none; /* Убирает подчёркивание */
+    color: inherit;         /* Наследует цвет кнопки (если нужно) */
+    padding: 0;             /* Удаляет лишние отступы ссылки */
+    
+}
+#button-link {
+    background: #e5f3ff;
+    border-color: #cce4f7;
+}
+
+
+    /* Футер с кнопками быстрых действий - 3.6 */
+    .open-files-footer {
+        display: flex;
+        padding: 12px 16px;
+        border-top: 1px solid #e0e0e0;
+        background: #f8f9fa;
+        border-radius: 0 0 6px 6px;
+        gap: 8px;
+    }
+    
+    .footer-btn {
+        flex: 1;
+        padding: 8px 12px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #333;
+        cursor: pointer;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all 0.2s;
+    }
+    
+    .footer-btn:hover {
+        background: #f0f0f0;
+        border-color: #ccc;
+    }
+    
+    .footer-btn:first-child {
+        background: #0078d7;
+        color: white;
+        border-color: #0078d7;
+    }
+    
+    .footer-btn:first-child:hover {
+        background: #106ebe;
+        border-color: #106ebe;
+    }
+
+
+        /* Элемент списка файлов - 3.2 */
+        .open-file-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0; /* 3.3 - Разделители между элементами */
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+        }  
+          /* Чередование фона - 3.3 */
+    .open-file-item:nth-child(even) {
+        background-color: #fafafa;
+    }
+    .open-file-item:hover {
+        background-color: #f0f7ff; /* 3.4 - Изменение фона при наведении */
+    }
+    
+    .open-file-item.active {
+        background-color: #e6f2ff; /* 3.4 - Визуальное выделение активного файла */
+        border-left: 3px solid #0078d7;
+    }  
+      .open-file-item:hover .open-file-thumbnail {
+        transform: scale(1.05); /* 3.2.1 - Легкое увеличение при наведении */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .open-file-item:hover{
+        opacity: 1;
+    }
+
+        /* Контейнер списка файлов */
+        .open-files-list {
+            flex: 1;
+            overflow-y: auto;
+            max-height: calc(70vh - 120px); /* Учитываем высоту заголовка и футера */
+        }
+        
+        /* Скроллбар - 3.5 */
+        .open-files-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .open-files-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .open-files-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
+        .open-files-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Контейнер выпадающего списка - 3.1 */
+    .open-files-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 320px; /* 3.1 - Ширина 300-350px */
+        background: white;
+        border-radius: 6px; /* 3.1 - Закругленные углы */
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1); /* 3.1 - Легкая тень */
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; /* 3.1 - Анимация 0.2-0.3 сек */
+        max-height: 70vh; /* 3.1 - Максимальная высота: 70% высоты экрана */
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .open-files-dropdown.show {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+
+
+
+
+
+
+
+    
+    /* Контейнер выпадающего списка - 3.1 */
+    .open-files-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 320px; /* 3.1 - Ширина 300-350px */
+        background: white;
+        border-radius: 6px; /* 3.1 - Закругленные углы */
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1); /* 3.1 - Легкая тень */
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; /* 3.1 - Анимация 0.2-0.3 сек */
+        max-height: 70vh; /* 3.1 - Максимальная высота: 70% высоты экрана */
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .open-files-dropdown.show {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+    
+    /* Заголовок выпадающего списка */
+    .open-files-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        border-radius: 6px 6px 0 0;
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+    }
+    
+    .close-dropdown-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 2px;
+        border-radius: 3px;
+        transition: background-color 0.2s;
+    }
+    
+    .close-dropdown-btn:hover {
+        background-color: #e0e0e0;
+        color: #333;
+    }
+    
+    /* Контейнер списка файлов */
+    .open-files-list {
+        flex: 1;
+        overflow-y: auto;
+        max-height: calc(70vh - 120px); /* Учитываем высоту заголовка и футера */
+    }
+    
+    /* Скроллбар - 3.5 */
+    .open-files-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .open-files-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .open-files-list::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+    
+    .open-files-list::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+    
+    /* Элемент списка файлов - 3.2 */
+    .open-file-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        border-bottom: 1px solid #f0f0f0; /* 3.3 - Разделители между элементами */
+        cursor: pointer;
+        transition: background-color 0.2s;
+        position: relative;
+    }
+    
+    /* Чередование фона - 3.3 */
+    .open-file-item:nth-child(even) {
+        background-color: #fafafa;
+    }
+    
+    .open-file-item:hover {
+        background-color: #f0f7ff; /* 3.4 - Изменение фона при наведении */
+    }
+    
+    .open-file-item.active {
+        background-color: #e6f2ff; /* 3.4 - Визуальное выделение активного файла */
+        border-left: 3px solid #0078d7;
+    }
+    
+    /* Миниатюра изображения - 3.2.1 */
+    .open-file-thumbnail {
+        width: 48px; /* 3.2.1 - Размер 48×48px */
+        height: 48px;
+        border-radius: 4px; /* 3.2.1 - Закругленные углы 4px */
+        overflow: hidden;
+        border: 1px solid #e0e0e0; /* 3.2.1 - Тонкая рамка */
+        flex-shrink: 0;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .open-file-item:hover .open-file-thumbnail {
+        transform: scale(1.05); /* 3.2.1 - Легкое увеличение при наведении */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .open-file-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 3.2.1 - Центральное обрезанное масштабирование */
+    }
+    
+    .open-file-thumbnail-placeholder {
+        color: #999;
+        font-size: 20px;
+    }
+    
+    /* Информация о файле - 3.2.2 */
+    .open-file-info {
+        flex: 1;
+        margin-left: 12px;
+        min-width: 0; /* Важно для усечения текста */
+    }
+    
+    .open-file-name {
+        font-weight: 500;
+        font-size: 14px; /* 3.2.2 - Основной текст 14px */
+        color: #333;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* 3.2.2 - Усечение с многоточием */
+    }
+    
+    .open-file-details {
+        font-size: 12px; /* 3.2.2 - Дополнительный текст 12px */
+        color: #666;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .open-file-resolution,
+    .open-file-format {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .open-file-resolution::before {
+        content: "🖼️";
+        font-size: 10px;
+    }
+    
+    .open-file-format::before {
+        content: "📄";
+        font-size: 10px;
+    }
+    
+    /* Элементы управления - 3.2.3 */
+    .open-file-actions {
+        margin-left: 8px;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+    
+    .open-file-item:hover .open-file-actions {
+        opacity: 1;
+    }
+    
+    .close-file-btn {
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 4px;
+        border-radius: 3px;
+        transition: background-color 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .close-file-btn:hover {
+        background-color: #ffebee;
+        color: #d32f2f;
+    }
+    
+    /* Заблокированный/недоступный файл - 3.4 */
+    .open-file-item.disabled {
+        opacity: 0.5; /* 3.4 - Уменьшенная opacity */
+        cursor: not-allowed;
+    }
+    
+    .open-file-item.disabled:hover {
+        background-color: inherit;
+    }
+    
+    /* Сообщение при пустом списке - 3.5 */
+    .no-files-message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        color: #999;
+        text-align: center;
+    }
+    
+    .no-files-message i {
+        font-size: 32px;
+        margin-bottom: 12px;
+        opacity: 0.5;
+    }
+    
+    .no-files-message div {
+        font-size: 14px;
+    }
+    
+    /* Футер с кнопками быстрых действий - 3.6 */
+    .open-files-footer {
+        display: flex;
+        padding: 12px 16px;
+        border-top: 1px solid #e0e0e0;
+        background: #f8f9fa;
+        border-radius: 0 0 6px 6px;
+        gap: 8px;
+    }
+    
+    .footer-btn {
+        flex: 1;
+        padding: 8px 12px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #333;
+        cursor: pointer;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all 0.2s;
+    }
+    
+    .footer-btn:hover {
+        background: #f0f0f0;
+        border-color: #ccc;
+    }
+    
+    .footer-btn:first-child {
+        background: #0078d7;
+        color: white;
+        border-color: #0078d7;
+    }
+    
+    .footer-btn:first-child:hover {
+        background: #106ebe;
+        border-color: #106ebe;
+    }
+    
+    /* Индикатор количества файлов в свернутом состоянии - 2 */
+    .file-count-badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: #0078d7;
+        color: white;
+        font-size: 10px;
+        font-weight: 600;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Кнопка открытия выпадающего списка */
+    #openFilesDropdownBtn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+        background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+    }
+
+
+    .history-markers div { transition: background 0.2s; }
+.history-markers div:hover { background: #007bff !important; height: 12px; }
+.history-item:hover { background: #f0f8ff; transition: background 0.2s; }
+/* Запрет выделения текста по всему приложению */
+* {
+    -webkit-user-select: none;   /* Safari, Chrome, Edge */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer / Edge */
+    user-select: none;           /* Стандарт */
+}
+
+/* Но разрешаем выделять в полях ввода и textarea */
+input, textarea, select, 
+[contenteditable="true"], 
+.modal-input, .modal-textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+.server-files-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.server-files-table th {
+    background: #f0f0f0;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+.server-files-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+.server-files-table tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+.server-files-table .folder-row {
+    font-weight: bold;
+    color: #0066cc;
+}
+.server-files-table .folder-row td:first-child {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%230066cc"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>') left center no-repeat;
+    background-size: 16px;
+    padding-left: 24px;
+}
+.server-files-table .file-row td:first-child {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23333"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/><path d="M14 8V3l5 5h-5z"/></svg>') left center no-repeat;
+    background-size: 16px;
+    padding-left: 24px;
+}
+.server-files-table .file-size {
+    text-align: right;
+    color: #666;
+}
+.server-files-table .file-date {
+    color: #666;
+    font-size: 12px;
+}
+.server-files-table .load-btn {
+    padding: 4px 8px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.server-files-table .load-btn:hover {
+    background: #45a049;
+}
+
+
+.move-btn {
+    padding: 4px 8px;
+    background: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 4px;
+}
+.move-btn:hover {
+    background: #f57c00;
+}
+
+
+.server-files-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.server-files-table th {
+    background: #f0f0f0;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+.server-files-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+.server-files-table tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+.server-files-table .folder-row {
+    font-weight: bold;
+    color: #0066cc;
+}
+.server-files-table .file-row td:first-child {
+    padding-left: 28px; /* для иконки */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23333"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/><path d="M14 8V3l5 5h-5z"/></svg>') left center no-repeat;
+    background-size: 16px;
+}
+.server-files-table .folder-row td:first-child {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%230066cc"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>') left center no-repeat;
+    background-size: 16px;
+}
+.server-files-table .file-size {
+    text-align: right;
+    color: #666;
+}
+.server-files-table .file-date {
+    color: #666;
+    font-size: 12px;
+}
+.load-btn, .move-btn {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    margin: 0 2px;
+}
+.load-btn {
+    background: #4CAF50;
+    color: white;
+}
+.load-btn:hover {
+    background: #45a049;
+}
+.move-btn {
+    background: #ff9800;
+    color: white;
+}
+.move-btn:hover {
+    background: #f57c00;
+}
+
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+.delete-btn:hover {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* Стили для двухпанельного менеджера */
+.server-panel {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+}
+.panel-header {
+    background: #e0e0e0;
+    padding: 4px 8px;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}
+.panel-content {
+    overflow-y: auto;
+    max-height: 100%;
+}
+.server-files-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.server-files-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #eee;
+    cursor: default;
+}
+.server-files-table tr:hover {
+    background-color: #f5f5f5;
+}
+.server-files-table .selected-row {
+    background-color: #cce4f7 !important;
+    border-left: 3px solid #0078d7;
+}
+.folder-row td:first-child {
+    font-weight: bold;
+    color: #0066cc;
+}
+.file-row td:first-child {
+    color: #333;
+}
+
+.server-panel.active-panel {
+    border: 2px solid #0078d7;
+    box-shadow: 0 0 5px rgba(0,120,215,0.5);
+}
+/* Активная панель – синяя рамка и тень */
+.server-panel.active-panel {
+    border: 2px solid #0078d7 !important;
+    box-shadow: 0 0 10px rgba(0, 120, 215, 0.5);
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+/* Заголовок активной панели – тёмно-синий фон, белый текст */
+.panel-header.active-header {
+    background: #0078d7 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Для неактивной панели заголовок остаётся серым */
+.panel-header {
+    background: #e0e0e0;
+    color: #333;
+    padding: 6px 8px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    transition: background 0.2s, color 0.2s;
+}
