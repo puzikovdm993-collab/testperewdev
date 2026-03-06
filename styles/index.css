@@ -369,9 +369,6 @@ body {
     background: var(--background-tertiary);
     overflow: auto;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 20px;
 }
 
@@ -381,7 +378,8 @@ body {
     border-radius: 0;
     position: relative;
     display: inline-block;
-    overflow: hidden;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .paint-canvas {
