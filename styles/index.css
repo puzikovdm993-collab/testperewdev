@@ -245,11 +245,21 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.ribbon-btn:hover .ribbon-icon,
+.ribbon-btn:hover .icon {
+    fill: var(--primary-color);
+}
+
 .ribbon-btn.active {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-hover);
     box-shadow: var(--shadow-md);
+}
+
+.ribbon-btn.active .ribbon-icon,
+.ribbon-btn.active .icon {
+    fill: white;
 }
 
 .ribbon-btn-large {
@@ -263,6 +273,33 @@ body {
     font-size: 10px;
     margin-top: 3px;
     color: var(--text-secondary);
+}
+
+/* Стили для SVG иконок */
+.icon,
+.ribbon-icon,
+.tool-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ribbon-btn-large .ribbon-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.tool-btn .tool-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.dropdown-item .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
 }
 
 .ribbon-btn img {
@@ -527,6 +564,16 @@ body {
     max-width: 16px;
     max-height: 16px;
     object-fit: contain;
+}
+
+/* Убираем стили для старых img иконок в dropdown */
+.dropdown-item .icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
 }
 
 /* Подменю (выпадающие меню второго уровня) */
