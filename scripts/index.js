@@ -1547,6 +1547,15 @@ function redo() {
 let zoomTargetX = null; // Точка масштабирования по X (относительно canvas)
 let zoomTargetY = null; // Точка масштабирования по Y (относительно canvas)
 
+// Обёртки для кнопок (без координат курсора - зум в центр)
+function zoomInFromButton() {
+    zoomIn();
+}
+
+function zoomOutFromButton() {
+    zoomOut();
+}
+
 function zoomIn(clientX, clientY) {
     const file = getActiveFile();
     if (!file || !file.canvas) return;
@@ -1563,6 +1572,7 @@ function zoomIn(clientX, clientY) {
         const scrollY = container.scrollTop;
         
         // Точка масштабирования в координатах canvas (до масштабирования)
+        // clientX/Y - координаты относительно viewport, containerRect.left/top - позиция контейнера
         targetCanvasX = (scrollX + clientX - containerRect.left) / zoom;
         targetCanvasY = (scrollY + clientY - containerRect.top) / zoom;
     }
@@ -1590,6 +1600,7 @@ function zoomOut(clientX, clientY) {
         const scrollY = container.scrollTop;
         
         // Точка масштабирования в координатах canvas (до масштабирования)
+        // clientX/Y - координаты относительно viewport, containerRect.left/top - позиция контейнера
         targetCanvasX = (scrollX + clientX - containerRect.left) / zoom;
         targetCanvasY = (scrollY + clientY - containerRect.top) / zoom;
     }
@@ -1683,8 +1694,6 @@ function applyZoom(targetCanvasX, targetCanvasY, oldZoom) {
         // Стандартное применение зума без коррекции позиции
         file.canvas.style.width = `${file.canvas.width * zoom}px`;
         file.canvas.style.height = `${file.canvas.height * zoom}px`;
-        file.canvas.style.transform = 'none';
-        file.canvas.style.transformOrigin = '0 0';
     }
 
     // Проверяем, существует ли элемент интерфейса для отображения уровня зума

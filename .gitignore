@@ -1,1 +1,1 @@
-(empty)
+Nothing should be ignored since the changes only include source files (.js, .css) without any build artifacts, dependencies, or temporary files.

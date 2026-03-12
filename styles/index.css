@@ -369,7 +369,7 @@ body {
 .canvas-area {
     flex: 1;
     background: var(--background-tertiary);
-    overflow: auto;
+    overflow: hidden;
     position: relative;
     display: flex;
     align-items: center;
