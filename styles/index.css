@@ -383,7 +383,9 @@ body {
     border-radius: 0;
     position: relative;
     display: inline-block;
-    overflow: hidden;
+    overflow: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 200px);
 }
 
 .paint-canvas {

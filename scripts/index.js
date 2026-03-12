@@ -299,7 +299,7 @@ function switchToFile(fileId) {
     updateWindowTitle();        // Функция для обновления заголовка окна
     updateCurrentFileLabel();   // Функция для обновления метки текущего файла в Ribbon
     updateCanvasSize();         // Управление холстом
-    applyZoom();
+    applyZoom();                // Применение зума (без параметров для сброса позиции)
     setCanvasCursor();
     
     // Обновляем список открытых файлов
@@ -585,9 +585,9 @@ document.addEventListener('wheel', (e) => {
         // Проверяем направление прокрутки
         const deltaY = e.deltaY; // >0 - вниз, <0 - вверх
         if (deltaY > 0) {
-            zoomOut(); // Прокрутка вниз → масштабировать "на себя" (уменьшение)
+            zoomOut(e.clientX, e.clientY); // Прокрутка вниз → масштабировать "на себя" (уменьшение)
         } else {
-            zoomIn();  // Прокрутка вверх → масштабировать "от себя" (увеличение)
+            zoomIn(e.clientX, e.clientY);  // Прокрутка вверх → масштабировать "от себя" (увеличение)
         }
 
 
@@ -945,7 +945,7 @@ function handleMouseUp(e) {
                     ctx = file.ctx;
                 }
                 updateCanvasSize();
-                applyZoom();
+                applyZoom();  // Без параметров для сброса позиции
                 saveState();
             }
             break;
@@ -1480,7 +1480,7 @@ function restoreState(file, state) {
     if (file.id === activeFileId) {
         canvas = file.canvas;
         ctx = file.ctx;
-        applyZoom();
+        applyZoom();  // Без параметров для сброса позиции
         updateCanvasSize();
     }
 }
@@ -1544,19 +1544,68 @@ function redo() {
 }
 
 // ============ Управление масштабом ============
-function zoomIn() {
+let zoomTargetX = null; // Точка масштабирования по X (относительно canvas)
+let zoomTargetY = null; // Точка масштабирования по Y (относительно canvas)
+
+function zoomIn(clientX, clientY) {
+    const file = getActiveFile();
+    if (!file || !file.canvas) return;
+    
+    const container = dom.canvasWrapper;
+    const containerRect = container.getBoundingClientRect();
+    
+    // Вычисляем точку масштабирования в координатах canvas ДО изменения зума
+    let targetCanvasX, targetCanvasY;
+    
+    if (clientX !== undefined && clientY !== undefined) {
+        // Координаты курсора относительно контейнера с учетом прокрутки
+        const scrollX = container.scrollLeft;
+        const scrollY = container.scrollTop;
+        
+        // Точка масштабирования в координатах canvas (до масштабирования)
+        targetCanvasX = (scrollX + clientX - containerRect.left) / zoom;
+        targetCanvasY = (scrollY + clientY - containerRect.top) / zoom;
+    }
+    
+    const oldZoom = zoom;
     zoom = Math.min(zoom * 1.2, 32);
-    applyZoom();
+    
+    // Применяем зум
+    applyZoom(targetCanvasX, targetCanvasY, oldZoom);
 }
 
-function zoomOut() {
+function zoomOut(clientX, clientY) {
+    const file = getActiveFile();
+    if (!file || !file.canvas) return;
+    
+    const container = dom.canvasWrapper;
+    const containerRect = container.getBoundingClientRect();
+    
+    // Вычисляем точку масштабирования в координатах canvas ДО изменения зума
+    let targetCanvasX, targetCanvasY;
+    
+    if (clientX !== undefined && clientY !== undefined) {
+        // Координаты курсора относительно контейнера с учетом прокрутки
+        const scrollX = container.scrollLeft;
+        const scrollY = container.scrollTop;
+        
+        // Точка масштабирования в координатах canvas (до масштабирования)
+        targetCanvasX = (scrollX + clientX - containerRect.left) / zoom;
+        targetCanvasY = (scrollY + clientY - containerRect.top) / zoom;
+    }
+    
+    const oldZoom = zoom;
     zoom = Math.max(zoom / 1.2, 0.01);
-    applyZoom();
+    
+    // Применяем зум
+    applyZoom(targetCanvasX, targetCanvasY, oldZoom);
 }
 
 function zoomReset() {
     zoom = 1;
-    applyZoom();
+    zoomTargetX = null; // Сбрасываем точку масштабирования
+    zoomTargetY = null;
+    applyZoom();  // Без параметров для сброса позиции
 }
 
 /**
@@ -1582,16 +1631,22 @@ function fitImageToScreen() {
     
     // Используем меньший коэффициент чтобы изображение вписалось полностью
     zoom = Math.min(scaleX, scaleY, 1); // Не увеличиваем если изображение маленькое
+    zoomTargetX = null; // Сбрасываем точку масштабирования при автоподгонке
+    zoomTargetY = null;
     
-    applyZoom();
+    applyZoom();  // Без параметров для сброса позиции
 }
 
 /**
  * Функция applyZoom() применяет масштабирование к активному холсту (canvas).
  * Обновляет размеры холста в DOM и отображает текущий уровень зума.
+ * Если задана точка масштабирования, позиционирует canvas так,
+ * чтобы эта точка оставалась под курсором.
+ * @param {number} targetCanvasX - Точка масштабирования в координатах canvas (опционально)
+ * @param {number} targetCanvasY - Точка масштабирования в координатах canvas (опционально)
+ * @param {number} oldZoom - Старый коэффициент зума (опционально)
  */
-function applyZoom() {
-
+function applyZoom(targetCanvasX, targetCanvasY, oldZoom) {
     // Получаем текущий активный файл (предположительно, объект с данными изображения)
     const file = getActiveFile();
 
@@ -1601,11 +1656,36 @@ function applyZoom() {
         return;
     }
 
-    // Масштабируем ширину холста, умножая его исходное значение на коэффициент zoom
-    file.canvas.style.width = `${file.canvas.width * zoom}px`;
-
-    // Масштабируем высоту холста аналогично
-    file.canvas.style.height = `${file.canvas.height * zoom}px`;
+    const container = dom.canvasWrapper;
+    
+    // Если переданы параметры точки масштабирования, используем их
+    if (targetCanvasX !== undefined && targetCanvasY !== undefined && oldZoom !== undefined) {
+        // Вычисляем позицию точки на экране ДО изменения размера
+        const oldScreenX = targetCanvasX * oldZoom;
+        const oldScreenY = targetCanvasY * oldZoom;
+        
+        // Координаты точки относительно левого верхнего угла контейнера
+        const relativeX = container.scrollLeft + oldScreenX;
+        const relativeY = container.scrollTop + oldScreenY;
+        
+        // Масштабируем ширину холста
+        file.canvas.style.width = `${file.canvas.width * zoom}px`;
+        file.canvas.style.height = `${file.canvas.height * zoom}px`;
+        
+        // Новая позиция точки масштабирования после изменения размера
+        const newScreenX = targetCanvasX * zoom;
+        const newScreenY = targetCanvasY * zoom;
+        
+        // Корректируем прокрутку так, чтобы точка осталась на месте
+        container.scrollLeft = relativeX - newScreenX;
+        container.scrollTop = relativeY - newScreenY;
+    } else {
+        // Стандартное применение зума без коррекции позиции
+        file.canvas.style.width = `${file.canvas.width * zoom}px`;
+        file.canvas.style.height = `${file.canvas.height * zoom}px`;
+        file.canvas.style.transform = 'none';
+        file.canvas.style.transformOrigin = '0 0';
+    }
 
     // Проверяем, существует ли элемент интерфейса для отображения уровня зума
     if (dom.zoomLevel) {
@@ -1744,7 +1824,7 @@ function applyResize() {
         canvas = file.canvas;
         ctx = file.ctx;
         updateCanvasSize();
-        applyZoom();
+        applyZoom();  // Без параметров для сброса позиции
     }
     
     saveState();
@@ -1792,7 +1872,7 @@ function rotateCanvas(degrees) {
             canvas = file.canvas;
             ctx = file.ctx;
             updateCanvasSize();
-            applyZoom();
+            applyZoom();  // Без параметров для сброса позиции
         }
         
         updateProgress(100, 'Готово!');
@@ -2320,7 +2400,9 @@ function zoomCustom() {
         const num = parseInt(value);
         if (!isNaN(num) && num >= 10 && num <= 800) {
             zoom = num / 100;
-            applyZoom();
+            zoomTargetX = null; // Сбрасываем точку масштабирования при ручном вводе
+            zoomTargetY = null;
+            applyZoom();  // Без параметров для сброса позиции
         }
     }
 }

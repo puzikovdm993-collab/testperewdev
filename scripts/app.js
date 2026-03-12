@@ -282,14 +282,22 @@ function getColormap(name) {
  * Применяет медианный фильтр к матрице m × n.
  * @param {number[][]} matrix - Входная матрица (массив массивов).
  * @param {number} kernelSize - Размер окна фильтра (нечетное число, например 3).
- * @returns {number[][]} - Отфильтрованная матрица.
+ * @returns {Promise<number[][]>} - Отфильтрованная матрица.
  */
- function _medianFilter(matrix, kernelSize) {
+async function _medianFilter(matrix, kernelSize) {
     const m = matrix.length;
     const n = matrix[0].length;
     const padSize = Math.floor(kernelSize / 2);
+    
+    updateProgress(30, 'Создание расширенной матрицы...');
+    await new Promise(resolve => setTimeout(resolve, 50)); // Пауза для отрисовки
+    
     const paddedMatrix = this._createPaddedMatrix(matrix, padSize);
     const filteredMatrix = [];
+
+    const totalPixels = m * n;
+    let processedPixels = 0;
+    const updateInterval = Math.max(1, Math.floor(totalPixels / 100)); // Обновляем каждые 1%
 
     for (let i = 0; i < m; i++) {
         const row = [];
@@ -299,6 +307,18 @@ function getColormap(name) {
             // Находим медиану
             const median = this._calculateMedian(window);
             row.push(median);
+            
+            processedPixels++;
+            
+            // Обновляем прогресс каждые 1% или в конце
+            if (processedPixels % updateInterval === 0 || processedPixels === totalPixels) {
+                const progress = Math.round(40 + (processedPixels / totalPixels) * 50);
+                updateProgress(progress, 'Фильтрация изображения...');
+                // Небольшая пауза для отрисовки прогресс-бара, но не слишком частая
+                if (processedPixels % (updateInterval * 5) === 0 || processedPixels === totalPixels) {
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+            }
         }
         filteredMatrix.push(row);
     }
@@ -463,7 +483,7 @@ function closeMedianModal() {
    document.getElementById('medianModal').classList.remove('active');
 }
 // Применение медианного фильтра
-function applyMedianFilter() {
+async function applyMedianFilter() {
 
     const file = getActiveFile();
     if (!file) return;
@@ -472,11 +492,11 @@ const t = document.getElementById('newAperture').value;
     // Показываем модальное окно прогресса
     showProgressModal('Поворот изображения', false);
     // Используем setTimeout чтобы дать UI обновиться перед тяжелой операцией
-    setTimeout(() => {
+    setTimeout(async () => {
         updateProgress(20, 'Вычисление новых размеров...');
 
     const aprture = parseInt(t, 10);
-    const filtered123 = _medianFilter(file.matrix, aprture); 
+    const filtered123 = await _medianFilter(file.matrix, aprture); 
 
     const width = file.matrix.length;
     const height = file.matrix[0].length;
