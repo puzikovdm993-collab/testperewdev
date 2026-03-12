@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрация модального окна прогресса</title>
+    <style>
+        :root {
+            --modal-bg: #ffffff;
+            --modal-border: #e4e4e7;
+            --modal-header-bg: #fafafa;
+            --modal-text: #18181b;
+            --modal-text-muted: #71717a;
+            --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+            --modal-radius: 8px;
+            --modal-overlay: rgba(0, 0, 0, 0.4);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .demo-btn.primary {
+            background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+            color: white;
+        }
+        
+        .demo-btn.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .demo-btn.danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+        
+        .demo-btn.info {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        
+        .demo-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .info-box {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            max-width: 650px;
+            margin-top: 20px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #18181b;
+            font-size: 18px;
+        }
+        
+        .info-box code {
+            background: #f4f4f5;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #c7254e;
+        }
+        
+        .info-box pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .info-box ul {
+            line-height: 1.8;
+            color: #52525b;
+        }
+        
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--modal-overlay);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--modal-bg);
+            border: 1px solid var(--modal-border);
+            box-shadow: var(--modal-shadow);
+            min-width: 400px;
+            max-width: 90vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: var(--modal-radius);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-title {
+            background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+            color: var(--modal-text);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--modal-border);
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .modal-title button {
+            background: transparent;
+            border: none;
+            color: var(--modal-text-muted);
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-title button:hover {
+            background: #e4e4e7;
+            color: #ef4444;
+        }
+        
+        .modal-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            background: var(--modal-bg);
+        }
+        
+        .modal-row {
+            margin-bottom: 14px;
+        }
+        
+        .modal-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .progress-message {
+            font-size: 14px;
+            color: var(--modal-text-muted);
+            margin-bottom: 16px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .progress-container {
+            width: 100%;
+            margin: 8px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 28px;
+            background: linear-gradient(180deg, #f0f0f0 0%, #e4e4e7 100%);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 50%, #3b82f6 100%);
+            background-size: 200% 100%;
+            transition: width 0.3s ease;
+            border-radius: 14px;
+            position: relative;
+            overflow: hidden;
+            animation: shimmer 2s infinite linear;
+        }
+        
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: progressShimmer 1.5s infinite;
+        }
+        
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .progress-bar-fill.complete {
+            background: linear-gradient(90deg, #10b981 0%, #059669 50%, #10b981 100%);
+            background-size: 200% 100%;
+            animation: completePulse 0.5s ease;
+        }
+        
+        .progress-bar-fill.error {
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 50%, #ef4444 100%);
+            background-size: 200% 100%;
+            animation: errorShake 0.5s ease;
+        }
+        
+        @keyframes completePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--modal-text);
+            margin-top: 10px;
+        }
+        
+        .modal-btn {
+            height: 38px;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            background: #dc3545;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+        }
+        
+        .modal-btn:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Демонстрация модального окна прогресса</h1>
+    
+    <div class="demo-buttons">
+        <button class="demo-btn primary" onclick="startDownloadDemo()">📥 Загрузка файла</button>
+        <button class="demo-btn success" onclick="startUploadDemo()">📤 Выгрузка на сервер</button>
+        <button class="demo-btn info" onclick="startProcessingDemo()">⚙️ Обработка данных</button>
+        <button class="demo-btn danger" onclick="startErrorDemo()">❌ Ошибка процесса</button>
+    </div>
+    
+    <div class="info-box">
+        <h3>📖 Как использовать</h3>
+        <p>Модальное окно прогресса предоставляет следующие функции:</p>
+        <ul>
+            <li><code>showProgressModal(title, cancellable)</code> - показать окно</li>
+            <li><code>updateProgress(percent, message)</code> - обновить прогресс</li>
+            <li><code>setProgressStatus(status, message)</code> - установить статус (complete/error)</li>
+            <li><code>closeProgressModal()</code> - закрыть окно</li>
+            <li><code>setOnProgressCancel(callback)</code> - обработчик отмены</li>
+        </ul>
+        
+        <h3>Пример кода:</h3>
+        <pre>
+// Показать окно прогресса
+showProgressModal('Загрузка файла', true);
+
+// Установить обработчик отмены
+setOnProgressCancel(() => {
+    console.log('Пользователь отменил операцию');
+    closeProgressModal();
+});
+
+// Обновлять прогресс
+let progress = 0;
+const interval = setInterval(() => {
+    progress += 10;
+    updateProgress(progress, `Загружено ${progress}%`);
+    
+    if (progress >= 100) {
+        clearInterval(interval);
+        setProgressStatus('complete', 'Загрузка завершена!');
+        setTimeout(closeProgressModal, 1000);
+    }
+}, 500);
+        </pre>
+    </div>
+
+    <!-- Модальное окно прогресса -->
+    <div class="modal-overlay" id="progressOverlay"></div>
+    <div class="modal" id="progressModal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <span id="progressModalTitle">Выполнение операции</span>
+                <button onclick="closeProgressModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-row">
+                    <p id="progressMessage" class="progress-message">Подготовка...</p>
+                </div>
+                <div class="modal-row progress-container">
+                    <div class="progress-bar">
+                        <div id="progressBarFill" class="progress-bar-fill"></div>
+                    </div>
+                </div>
+                <div class="modal-row">
+                    <div class="progress-text">
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+                <div class="modal-row" id="progressCancelRow" style="display:flex; justify-content:center; margin-top:16px;">
+                    <button class="modal-btn" id="progressCancelBtn">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let onProgressCancel = null;
+
+        // Показать модальное окно прогресса
+        window.showProgressModal = function(title = 'Выполнение операции', cancellable = true) {
+            const modal = document.getElementById('progressModal');
+            const overlay = document.getElementById('progressOverlay');
+            
+            document.getElementById('progressModalTitle').textContent = title;
+            document.getElementById('progressMessage').textContent = 'Подготовка...';
+            document.getElementById('progressBarFill').style.width = '0%';
+            document.getElementById('progressBarFill').className = 'progress-bar-fill';
+            document.getElementById('progressPercent').textContent = '0%';
+
+            const cancelRow = document.getElementById('progressCancelRow');
+            cancelRow.style.display = cancellable ? 'flex' : 'none';
+
+            if (overlay) overlay.style.display = 'block';
+            modal.classList.add('active');
+        };
+
+        // Обновить прогресс
+        window.updateProgress = function(percent, message) {
+            const fill = document.getElementById('progressBarFill');
+            const percentSpan = document.getElementById('progressPercent');
+            const msgSpan = document.getElementById('progressMessage');
+
+            if (fill) {
+                fill.style.width = Math.min(100, Math.max(0, percent)) + '%';
+                fill.classList.remove('complete', 'error');
+                if (percent >= 100) {
+                    fill.classList.add('complete');
+                }
+            }
+            if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
+            if (msgSpan && message !== undefined) msgSpan.textContent = message;
+        };
+
+        // Установить статус
+        window.setProgressStatus = function(status, message) {
+            const fill = document.getElementById('progressBarFill');
+            const msgSpan = document.getElementById('progressMessage');
+            
+            if (fill) {
+                fill.classList.remove('complete', 'error');
+                if (status) {
+                    fill.classList.add(status);
+                }
+            }
+            if (msgSpan && message) {
+                msgSpan.textContent = message;
+            }
+        };
+
+        // Закрыть окно
+        window.closeProgressModal = function() {
+            const modal = document.getElementById('progressModal');
+            const overlay = document.getElementById('progressOverlay');
+            
+            if (modal) modal.classList.remove('active');
+            if (overlay) overlay.style.display = 'none';
+            onProgressCancel = null;
+        };
+
+        // Установить обработчик отмены
+        window.setOnProgressCancel = function(callback) {
+            onProgressCancel = callback;
+        };
+
+        // Обработчик кнопки отмены
+        document.getElementById('progressCancelBtn')?.addEventListener('click', () => {
+            if (typeof onProgressCancel === 'function') {
+                onProgressCancel();
+            } else {
+                closeProgressModal();
+            }
+        });
+
+        // Демонстрация загрузки файла
+        function startDownloadDemo() {
+            showProgressModal('📥 Загрузка файла', true);
+            
+            setOnProgressCancel(() => {
+                if (confirm('Отменить загрузку?')) {
+                    closeProgressModal();
+                }
+            });
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    updateProgress(progress, 'Файл загружен!');
+                    setTimeout(closeProgressModal, 1500);
+                } else {
+                    updateProgress(progress, `Загружено ${Math.round(progress)}% из 100%`);
+                }
+            }, 300);
+        }
+
+        // Демонстрация выгрузки на сервер
+        function startUploadDemo() {
+            showProgressModal('📤 Выгрузка на сервер', true);
+            
+            setOnProgressCancel(() => {
+                closeProgressModal();
+            });
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 8;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setProgressStatus('complete', 'Успешно отправлено на сервер!');
+                    setTimeout(closeProgressModal, 1500);
+                } else {
+                    updateProgress(progress, `Отправка данных... ${Math.round(progress)}%`);
+                }
+            }, 250);
+        }
+
+        // Демонстрация обработки данных
+        function startProcessingDemo() {
+            showProgressModal('⚙️ Обработка данных', false);
+            
+            const messages = [
+                'Инициализация...',
+                'Чтение данных...',
+                'Анализ структуры...',
+                'Применение фильтров...',
+                'Сохранение результатов...'
+            ];
+            
+            let step = 0;
+            const interval = setInterval(() => {
+                step++;
+                const progress = step * 20;
+                
+                if (step >= 5) {
+                    clearInterval(interval);
+                    setProgressStatus('complete', 'Обработка завершена!');
+                    setTimeout(closeProgressModal, 1500);
+                } else {
+                    updateProgress(progress, messages[step]);
+                }
+            }, 800);
+        }
+
+        // Демонстрация ошибки
+        function startErrorDemo() {
+            showProgressModal('❌ Тест ошибки', true);
+            
+            setOnProgressCancel(() => {
+                closeProgressModal();
+            });
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 20;
+                if (progress >= 60) {
+                    clearInterval(interval);
+                    setProgressStatus('error', 'Ошибка соединения с сервером');
+                    setTimeout(closeProgressModal, 2000);
+                } else {
+                    updateProgress(progress, `Попытка подключения... ${Math.round(progress)}%`);
+                }
+            }, 400);
+        }
+    </script>
+</body>
+</html>

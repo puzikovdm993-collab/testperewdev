@@ -1,0 +1,370 @@
+/* modals.css - Clean UI / Linear style */
+
+:root {
+    --modal-bg: #ffffff;
+    --modal-border: #e4e4e7;
+    --modal-header-bg: #fafafa;
+    --modal-text: #18181b;
+    --modal-text-muted: #71717a;
+    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+    --modal-radius: 8px;
+    --modal-overlay: rgba(0, 0, 0, 0.4);
+}
+
+/* Overlay for modals */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--modal-overlay);
+    backdrop-filter: blur(2px);
+    z-index: 9999;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* Контент модалки */
+.modal-content {
+    position: fixed;
+    background: var(--modal-bg);
+    border: 1px solid var(--modal-border);
+    box-shadow: var(--modal-shadow);
+    min-width: 360px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    left: 100px;
+    top: 100px;
+    border-radius: var(--modal-radius);
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Заголовок — область перетаскивания */
+.modal-title {
+    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+    color: var(--modal-text);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    user-select: none;
+    border-bottom: 1px solid var(--modal-border);
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.modal-title:active {
+    cursor: grabbing;
+}
+
+/* Тело модалки */
+.modal-body {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--modal-bg);
+}
+
+/* Контейнер для графика */
+.modal-graph-container,
+.graph-container {
+    flex: 1;
+    min-height: 0;
+    background: #f8fafc;
+    border: 1px solid var(--modal-border);
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#graphCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Кнопки модалки */
+.modal-buttons {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--modal-border);
+    background: linear-gradient(135deg, var(--modal-header-bg) 0%, #f4f4f5 100%);
+}
+
+.modal-btn {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--modal-border);
+    background: var(--modal-bg);
+    color: var(--modal-text);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.modal-btn:hover {
+    background: #f8fafc;
+    border-color: #d4d4d8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+    background: #fafafa;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, var(--modal-text) 0%, #27272a 100%);
+    border-color: var(--modal-text);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.modal-btn.primary:hover {
+    background: linear-gradient(135deg, #000 0%, #18181b 100%);
+    border-color: #000;
+    opacity: 0.95;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal-btn.danger {
+    color: #dc2626;
+    border-color: #fecaca;
+    background: #fef2f2;
+    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.1);
+}
+
+.modal-btn.danger:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.15);
+}
+
+/* Ручка изменения размера */
+.modal-resize-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    cursor: se-resize;
+    background: transparent;
+    z-index: 10;
+}
+
+.modal-resize-handle::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--modal-text-muted);
+    border-bottom: 2px solid var(--modal-text-muted);
+    opacity: 0.4;
+}
+
+/* Кнопка закрытия в заголовке */
+.modal-title button {
+    background: transparent;
+    border: none;
+    color: var(--modal-text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title button:hover {
+    background: #e4e4e7;
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
+/* Graph panel styles */
+.graph-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.graph-panel h3 {
+    flex-shrink: 0;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--modal-text);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--modal-border);
+}
+
+/* Input fields in modals */
+.modal-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 13px;
+    border: 1px solid var(--modal-border);
+    border-radius: 6px;
+    background: var(--modal-bg);
+    color: var(--modal-text);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.modal-input:focus {
+    border-color: var(--modal-text);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Modal labels */
+.modal-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--modal-text-muted);
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Form groups in modals */
+.modal-form-group {
+    margin-bottom: 16px;
+}
+
+.modal-form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Progress bar styles */
+.progress-container {
+    width: 100%;
+    margin: 16px 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 24px;
+    background: linear-gradient(180deg, #f0f0f0 0%, #e4e4e7 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 50%, #3b82f6 100%);
+    background-size: 200% 100%;
+    transition: width 0.3s ease;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    animation: shimmer 2s infinite linear;
+}
+
+.progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: progressShimmer 1.5s infinite;
+}
+
+@keyframes progressShimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.progress-bar-fill.complete {
+    background: linear-gradient(90deg, #10b981 0%, #059669 50%, #10b981 100%);
+    background-size: 200% 100%;
+}
+
+.progress-bar-fill.error {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 50%, #ef4444 100%);
+    background-size: 200% 100%;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--modal-text);
+    margin-top: 8px;
+}
+
+.progress-message {
+    font-size: 13px;
+    color: var(--modal-text-muted);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+/* Modal row utility */
+.modal-row {
+    margin-bottom: 12px;
+}
+
+.modal-row:last-child {
+    margin-bottom: 0;
+}

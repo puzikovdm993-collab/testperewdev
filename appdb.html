@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>IndexedDB Глобальный Пример</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<h2>Пример работы с глобальной переменной AppDB</h2>
+<button onclick="demo()">Запустить демо</button>
+<pre id="output"></pre>
+
+<script>
+/**
+ * Глобальная переменная AppDB для работы с IndexedDB
+ */
+const AppDB = {
+    dbName: 'MyGlobalAppDB',
+    dbVersion: 1,
+    storeName: 'users',
+    db: null,
+
+    init() {
+        return new Promise((resolve, reject) => {
+            if (this.db) return resolve(this.db);
+
+            const request = indexedDB.open(this.dbName, this.dbVersion);
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains(this.storeName)) {
+                    const objectStore = db.createObjectStore(this.storeName, { 
+                        keyPath: 'id', 
+                        autoIncrement: true 
+                    });
+                    objectStore.createIndex('username', 'username', { unique: true });
+                }
+            };
+
+            request.onsuccess = (event) => {
+                this.db = event.target.result;
+                resolve(this.db);
+            };
+            request.onerror = (event) => reject(event.target.errorCode);
+        });
+    },
+
+    async add(data) {
+        await this.init();
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction([this.storeName], 'readwrite');
+            const store = transaction.objectStore(this.storeName);
+            const request = store.add(data);
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    },
+
+    async get(id) {
+        await this.init();
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction([this.storeName], 'readonly');
+            const store = transaction.objectStore(this.storeName);
+            const request = store.get(id);
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    },
+
+    async getAll() {
+        await this.init();
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction([this.storeName], 'readonly');
+            const store = transaction.objectStore(this.storeName);
+            const request = store.getAll();
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    },
+
+    async clear() {
+        await this.init();
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction([this.storeName], 'readwrite');
+            const store = transaction.objectStore(this.storeName);
+            const request = store.clear();
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+};
+
+// Демонстрация использования
+async function demo() {
+    const output = document.getElementById('output');
+    output.textContent = '';
+
+    try {
+        // Добавляем тестового пользователя
+        const userData = {
+            username: 'test_user_1',
+            settings: { theme: 'dark', lang: 'ru' },
+            created: new Date(),
+            permissions: ['read', 'write']
+        };
+        const id = await AppDB.add(userData);
+        output.textContent += `Добавлен пользователь с ID: ${id}\n`;
+
+        // Получаем всех пользователей
+        const users = await AppDB.getAll();
+        output.textContent += `Всего пользователей: ${users.length}\n`;
+        output.textContent += `Данные первого:\n${JSON.stringify(users[0], null, 2)}\n`;
+
+    } catch (e) {
+        output.textContent = `Ошибка: ${e.message}`;
+    }
+}
+
+// Инициализация при загрузке
+AppDB.init().then(() => console.log('AppDB инициализирован'));
+</script>
+
+</body>
+</html>
