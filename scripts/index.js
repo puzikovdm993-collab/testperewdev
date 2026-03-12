@@ -1562,19 +1562,19 @@ function zoomIn(clientX, clientY) {
     
     const container = dom.canvasWrapper;
     const containerRect = container.getBoundingClientRect();
+    const canvasRect = file.canvas.getBoundingClientRect();
     
     // Вычисляем точку масштабирования в координатах canvas ДО изменения зума
     let targetCanvasX, targetCanvasY;
     
     if (clientX !== undefined && clientY !== undefined) {
-        // Координаты курсора относительно контейнера с учетом прокрутки
-        const scrollX = container.scrollLeft;
-        const scrollY = container.scrollTop;
+        // Координаты курсора относительно левого верхнего угла canvas
+        const cursorX = clientX - canvasRect.left;
+        const cursorY = clientY - canvasRect.top;
         
         // Точка масштабирования в координатах canvas (до масштабирования)
-        // clientX/Y - координаты относительно viewport, containerRect.left/top - позиция контейнера
-        targetCanvasX = (scrollX + (clientX - containerRect.left)) / zoom;
-        targetCanvasY = (scrollY + (clientY - containerRect.top)) / zoom;
+        targetCanvasX = cursorX / zoom;
+        targetCanvasY = cursorY / zoom;
     }
     
     const oldZoom = zoom;
@@ -1590,19 +1590,19 @@ function zoomOut(clientX, clientY) {
     
     const container = dom.canvasWrapper;
     const containerRect = container.getBoundingClientRect();
+    const canvasRect = file.canvas.getBoundingClientRect();
     
     // Вычисляем точку масштабирования в координатах canvas ДО изменения зума
     let targetCanvasX, targetCanvasY;
     
     if (clientX !== undefined && clientY !== undefined) {
-        // Координаты курсора относительно контейнера с учетом прокрутки
-        const scrollX = container.scrollLeft;
-        const scrollY = container.scrollTop;
+        // Координаты курсора относительно левого верхнего угла canvas
+        const cursorX = clientX - canvasRect.left;
+        const cursorY = clientY - canvasRect.top;
         
         // Точка масштабирования в координатах canvas (до масштабирования)
-        // clientX/Y - координаты относительно viewport, containerRect.left/top - позиция контейнера
-        targetCanvasX = (scrollX + (clientX - containerRect.left)) / zoom;
-        targetCanvasY = (scrollY + (clientY - containerRect.top)) / zoom;
+        targetCanvasX = cursorX / zoom;
+        targetCanvasY = cursorY / zoom;
     }
     
     const oldZoom = zoom;
