@@ -1553,9 +1553,17 @@ function zoomIn(clientX, clientY) {
     
     // Если переданы координаты курсора, вычисляем точку масштабирования
     if (clientX !== undefined && clientY !== undefined) {
+        const container = dom.canvasHost;
         const rect = file.canvas.getBoundingClientRect();
-        zoomTargetX = (clientX - rect.left) / zoom;
-        zoomTargetY = (clientY - rect.top) / zoom;
+        
+        // Координаты курсора относительно контейнера с прокруткой
+        const containerRect = container.getBoundingClientRect();
+        const scrollX = container.scrollLeft;
+        const scrollY = container.scrollTop;
+        
+        // Точка масштабирования в координатах canvas (до масштабирования)
+        zoomTargetX = (scrollX + clientX - containerRect.left) / zoom;
+        zoomTargetY = (scrollY + clientY - containerRect.top) / zoom;
     }
     
     zoom = Math.min(zoom * 1.2, 32);
@@ -1568,9 +1576,17 @@ function zoomOut(clientX, clientY) {
     
     // Если переданы координаты курсора, вычисляем точку масштабирования
     if (clientX !== undefined && clientY !== undefined) {
+        const container = dom.canvasHost;
         const rect = file.canvas.getBoundingClientRect();
-        zoomTargetX = (clientX - rect.left) / zoom;
-        zoomTargetY = (clientY - rect.top) / zoom;
+        
+        // Координаты курсора относительно контейнера с прокруткой
+        const containerRect = container.getBoundingClientRect();
+        const scrollX = container.scrollLeft;
+        const scrollY = container.scrollTop;
+        
+        // Точка масштабирования в координатах canvas (до масштабирования)
+        zoomTargetX = (scrollX + clientX - containerRect.left) / zoom;
+        zoomTargetY = (scrollY + clientY - containerRect.top) / zoom;
     }
     
     zoom = Math.max(zoom / 1.2, 0.01);
