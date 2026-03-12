@@ -388,6 +388,10 @@ body {
     max-height: calc(100vh - 200px);
 }
 
+.canvas-wrapper canvas {
+    transform-origin: top left;
+}
+
 .paint-canvas {
     display: block;
     cursor: crosshair;

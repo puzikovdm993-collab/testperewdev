@@ -1573,8 +1573,8 @@ function zoomIn(clientX, clientY) {
         
         // Точка масштабирования в координатах canvas (до масштабирования)
         // clientX/Y - координаты относительно viewport, containerRect.left/top - позиция контейнера
-        targetCanvasX = (scrollX + clientX - containerRect.left) / zoom;
-        targetCanvasY = (scrollY + clientY - containerRect.top) / zoom;
+        targetCanvasX = (scrollX + (clientX - containerRect.left)) / zoom;
+        targetCanvasY = (scrollY + (clientY - containerRect.top)) / zoom;
     }
     
     const oldZoom = zoom;
@@ -1601,8 +1601,8 @@ function zoomOut(clientX, clientY) {
         
         // Точка масштабирования в координатах canvas (до масштабирования)
         // clientX/Y - координаты относительно viewport, containerRect.left/top - позиция контейнера
-        targetCanvasX = (scrollX + clientX - containerRect.left) / zoom;
-        targetCanvasY = (scrollY + clientY - containerRect.top) / zoom;
+        targetCanvasX = (scrollX + (clientX - containerRect.left)) / zoom;
+        targetCanvasY = (scrollY + (clientY - containerRect.top)) / zoom;
     }
     
     const oldZoom = zoom;
@@ -1701,6 +1701,12 @@ function applyZoom(targetCanvasX, targetCanvasY, oldZoom) {
         // Округляем zoom до целых процентов и обновляем текстовое содержимое элемента
         dom.zoomLevel.textContent = `Масштаб: ${Math.round(zoom * 100)}%`;
         // Пример: если zoom = 1.5, отобразится "150%"
+    }
+    
+    // Обновляем точку масштабирования для следующего раза
+    if (targetCanvasX !== undefined && targetCanvasY !== undefined) {
+        zoomTargetX = targetCanvasX;
+        zoomTargetY = targetCanvasY;
     }
 }
 
