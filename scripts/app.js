@@ -293,7 +293,9 @@ function getColormap(name) {
     const paddedMatrix = this._createPaddedMatrix(matrix, padSize);
     const filteredMatrix = [];
 
-    updateProgress(40, 'Фильтрация изображения...');
+    const totalPixels = m * n;
+    let processedPixels = 0;
+
     for (let i = 0; i < m; i++) {
         const row = [];
         for (let j = 0; j < n; j++) {
@@ -302,6 +304,12 @@ function getColormap(name) {
             // Находим медиану
             const median = this._calculateMedian(window);
             row.push(median);
+            
+            processedPixels++;
+            const progress = Math.round(40 + (processedPixels / totalPixels) * 50);
+            if (processedPixels % Math.max(1, Math.floor(totalPixels / 100)) === 0 || processedPixels === totalPixels) {
+                updateProgress(progress, 'Фильтрация изображения...');
+            }
         }
         filteredMatrix.push(row);
     }
