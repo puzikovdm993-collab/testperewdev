@@ -288,9 +288,12 @@ function getColormap(name) {
     const m = matrix.length;
     const n = matrix[0].length;
     const padSize = Math.floor(kernelSize / 2);
+    
+    updateProgress(30, 'Создание расширенной матрицы...');
     const paddedMatrix = this._createPaddedMatrix(matrix, padSize);
     const filteredMatrix = [];
 
+    updateProgress(40, 'Фильтрация изображения...');
     for (let i = 0; i < m; i++) {
         const row = [];
         for (let j = 0; j < n; j++) {
