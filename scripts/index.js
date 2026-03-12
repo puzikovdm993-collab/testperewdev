@@ -1553,11 +1553,10 @@ function zoomIn(clientX, clientY) {
     
     // Если переданы координаты курсора, вычисляем точку масштабирования
     if (clientX !== undefined && clientY !== undefined) {
-        const container = dom.canvasHost;
-        const rect = file.canvas.getBoundingClientRect();
-        
-        // Координаты курсора относительно контейнера с прокруткой
+        const container = dom.canvasWrapper;
         const containerRect = container.getBoundingClientRect();
+        
+        // Координаты курсора относительно контейнера с учетом прокрутки
         const scrollX = container.scrollLeft;
         const scrollY = container.scrollTop;
         
@@ -1576,11 +1575,10 @@ function zoomOut(clientX, clientY) {
     
     // Если переданы координаты курсора, вычисляем точку масштабирования
     if (clientX !== undefined && clientY !== undefined) {
-        const container = dom.canvasHost;
-        const rect = file.canvas.getBoundingClientRect();
-        
-        // Координаты курсора относительно контейнера с прокруткой
+        const container = dom.canvasWrapper;
         const containerRect = container.getBoundingClientRect();
+        
+        // Координаты курсора относительно контейнера с учетом прокрутки
         const scrollX = container.scrollLeft;
         const scrollY = container.scrollTop;
         
@@ -1651,7 +1649,7 @@ function applyZoom() {
     let scrollTop = 0;
     
     if (zoomTargetX !== null && zoomTargetY !== null) {
-        const container = dom.canvasHost;
+        const container = dom.canvasWrapper;
         if (container) {
             // Позиция точки масштабирования на экране до изменения размера
             const oldScreenX = zoomTargetX * zoom;
@@ -1677,7 +1675,7 @@ function applyZoom() {
 
     // Восстанавливаем позицию прокрутки так, чтобы точка масштабирования осталась на месте
     if (zoomTargetX !== null && zoomTargetY !== null) {
-        const container = dom.canvasHost;
+        const container = dom.canvasWrapper;
         if (container) {
             // Новая позиция точки масштабирования после изменения размера
             const newScreenX = zoomTargetX * zoom;
