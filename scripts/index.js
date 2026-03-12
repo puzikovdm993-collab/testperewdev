@@ -1634,7 +1634,6 @@ function fitImageToScreen() {
  * чтобы эта точка оставалась под курсором.
  */
 function applyZoom() {
-
     // Получаем текущий активный файл (предположительно, объект с данными изображения)
     const file = getActiveFile();
 
@@ -1644,21 +1643,20 @@ function applyZoom() {
         return;
     }
 
-    // Сохраняем текущую позицию прокрутки контейнера относительно точки масштабирования
-    let scrollLeft = 0;
-    let scrollTop = 0;
+    const container = dom.canvasWrapper;
     
-    if (zoomTargetX !== null && zoomTargetY !== null) {
-        const container = dom.canvasWrapper;
-        if (container) {
-            // Позиция точки масштабирования на экране до изменения размера
-            const oldScreenX = zoomTargetX * zoom;
-            const oldScreenY = zoomTargetY * zoom;
-            
-            // Запоминаем смещение точки масштабирования относительно левого верхнего угла контейнера
-            scrollLeft = container.scrollLeft + oldScreenX;
-            scrollTop = container.scrollTop + oldScreenY;
-        }
+    // Сохраняем текущие координаты точки масштабирования относительно контейнера ДО изменения размера
+    let relativeX = 0;
+    let relativeY = 0;
+    
+    if (zoomTargetX !== null && zoomTargetY !== null && container) {
+        // Позиция точки масштабирования на экране до изменения размера
+        const oldScreenX = zoomTargetX * zoom;
+        const oldScreenY = zoomTargetY * zoom;
+        
+        // Координаты точки относительно левого верхнего угла видимой области контейнера
+        relativeX = container.scrollLeft + oldScreenX;
+        relativeY = container.scrollTop + oldScreenY;
     }
 
     // Масштабируем ширину холста, умножая его исходное значение на коэффициент zoom
@@ -1674,17 +1672,14 @@ function applyZoom() {
     }
 
     // Восстанавливаем позицию прокрутки так, чтобы точка масштабирования осталась на месте
-    if (zoomTargetX !== null && zoomTargetY !== null) {
-        const container = dom.canvasWrapper;
-        if (container) {
-            // Новая позиция точки масштабирования после изменения размера
-            const newScreenX = zoomTargetX * zoom;
-            const newScreenY = zoomTargetY * zoom;
-            
-            // Корректируем прокрутку
-            container.scrollLeft = scrollLeft - newScreenX;
-            container.scrollTop = scrollTop - newScreenY;
-        }
+    if (zoomTargetX !== null && zoomTargetY !== null && container) {
+        // Новая позиция точки масштабирования после изменения размера
+        const newScreenX = zoomTargetX * zoom;
+        const newScreenY = zoomTargetY * zoom;
+        
+        // Корректируем прокрутку: новая прокрутка = старая относительная позиция - новая позиция точки на экране
+        container.scrollLeft = relativeX - newScreenX;
+        container.scrollTop = relativeY - newScreenY;
     }
 
     // Проверяем, существует ли элемент интерфейса для отображения уровня зума
