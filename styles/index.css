@@ -32,6 +32,32 @@
     box-shadow: var(--shadow-sm);
 }
 
+/* Поле с файлами внутри tabs-container */
+.tabs-file-field {
+    background: var(--background-tertiary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.tabs-file-field-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.tabs-file-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.tabs-file-name {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
 .tabs-header {
     display: flex;
     padding: 0 12px;
@@ -82,24 +108,35 @@
 }
 
 .tab-section {
-    margin-bottom: 20px;
-    padding: 16px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
     background: var(--background-tertiary);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
+    display: inline-block;
+    vertical-align: top;
+    max-width: 280px;
+    min-width: 200px;
 }
 
 .tab-section:last-child {
-    margin-bottom: 0;
+    margin-bottom: 12px;
 }
 
 .tab-section h4 {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
     border-bottom: 1px solid var(--border-color);
+}
+
+/* Контейнер для секций в ряду */
+.tab-sections-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .tab-buttons {
@@ -392,6 +429,22 @@ body {
     white-space: nowrap;
     transition: all var(--transition-fast);
     color: var(--text-primary);
+}
+
+/* Кнопки в ribbon для вкладок - компактные */
+.ribbon-tab-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+    height: auto;
+    width: auto;
+    gap: 4px;
+}
+
+.ribbon-tab-btn:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
 .ribbon-btn:hover {

@@ -43,8 +43,8 @@
         <symbol id="icon-image" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></symbol>
     </svg>
     
-    <!-- Основное меню приложения -->
-    <div class="menu-bar">
+    <!-- Основное меню приложения (скрыто) -->
+    <div class="menu-bar" style="display: none;">
         <div class="dropdown">
             <div class="menu-item">Файл</div>
             <div class="dropdown-content">
@@ -261,7 +261,7 @@
     <div class="ribbon">
 
         <!-- ГРУППА: Открытые файлы (постоянная, не меняется от вкладки) -->
-        <div class="ribbon-group">
+        <div class="ribbon-group" id="ribbonFilesGroup">
             <div class="ribbon-buttons" style="position: relative;">
                 <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
                     <!-- Превью активного файла (если есть) -->
@@ -312,6 +312,8 @@
             <span class="ribbon-group-title">Файлы</span>
         </div>
 
+        <!-- Динамический контент ribbon (меняется от вкладки) -->
+        <div id="ribbonDynamicContent"></div>
         
     </div>
 
@@ -319,6 +321,13 @@
 
     <!-- Панель вкладок (Tabs) -->
     <div class="tabs-container">
+        <!-- Поле с файлами теперь внутри tabs-container -->
+        <div class="tabs-file-field" id="tabsFileField" style="display: none;">
+            <div class="tabs-file-field-content">
+                <span class="tabs-file-label">Файл:</span>
+                <span class="tabs-file-name" id="tabsFileName">Безымянный</span>
+            </div>
+        </div>
         <div class="tabs-header">
             <button class="tab-btn active" data-tab="file">Файл</button>
             <button class="tab-btn" data-tab="edit">Правка</button>
