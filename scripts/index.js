@@ -2664,3 +2664,27 @@ function drawProfileInProgress(x1, y1, x2, y2) {
     ctx.arc(x2, y2, 5, 0, 2 * Math.PI);
     ctx.fill();
 }
+// ==========================================
+// Функции для переключения вкладок (Tabs)
+// ==========================================
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            // Убираем активный класс со всех кнопок и панелей
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // Добавляем активный класс текущей кнопке и панели
+            this.classList.add('active');
+            const targetPane = document.getElementById('tab-' + tabId);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        });
+    });
+});

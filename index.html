@@ -404,6 +404,115 @@
     </div>
 
     <!-- Скрытый input для загрузки изображений -->
+
+    <!-- Панель вкладок (Tabs) -->
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="filters">Фильтры</button>
+            <button class="tab-btn" data-tab="adjustments">Регулировка</button>
+            <button class="tab-btn" data-tab="shapes">Фигуры</button>
+            <button class="tab-btn" data-tab="tools">Инструменты</button>
+        </div>
+        <div class="tabs-content">
+            <!-- Контент вкладки "Фильтры" -->
+            <div class="tab-pane active" id="tab-filters">
+                <div class="tab-section">
+                    <h4>Выделение контуров</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="applyEdgeFilter()">Контур</button>
+                        <button class="tab-action-btn" onclick="applyEdgeDetection()">Определение границ</button>
+                        <button class="tab-action-btn" onclick="applyReliefFilter()">Рельеф</button>
+                        <button class="tab-action-btn" onclick="applySobelFilter()"><img src="images/SobelEffectPluginIcon.png" alt=""> Фильтр Edge</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Поиск объектов</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showOffsetCalculator()">Калькулятор смещений</button>
+                        <button class="tab-action-btn" onclick="showSymmetryAxis()">Ось симметрии</button>
+                        <button class="tab-action-btn" onclick="showCircleDetector()">Поиск окружности</button>
+                        <button class="tab-action-btn" onclick="showCenterDetector()">Центральный детектор</button>
+                        <button class="tab-action-btn" onclick="showViewCentering()">Центровка Ракурсов</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Предварительная обработка</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showApproximationModal()"><img src="images/ApproximationEffectPluginIcon.png" alt=""> Аппроксимация поверхностью</button>
+                        <button class="tab-action-btn" onclick="showArithmeticCalculator()">Арифметический калькулятор</button>
+                        <button class="tab-action-btn" onclick="showParaboloidCalc()">Вычисление параболоида</button>
+                        <button class="tab-action-btn" onclick="showPlaneCalc()">Вычисление плоскости</button>
+                        <button class="tab-action-btn" onclick="showKozlowskiSurface()">Вычисление поверхности Козловского</button>
+                        <button class="tab-action-btn" onclick="showCylindricalWedge()">Обработка по цилиндрическому клину</button>
+                        <button class="tab-action-btn" onclick="showOpticalDensity()">Оптическая плотность</button>
+                        <button class="tab-action-btn" onclick="applyLogorifmFilter()"><img src="images/PrelimProcess.png" alt=""> Предобработка</button>
+                        <button class="tab-action-btn" onclick="showScannerBandsRemoval()">Удаление полос сканера</button>
+                        <button class="tab-action-btn" onclick="showDefectRemoval()">Устранение точечных дефектов</button>
+                        <button class="tab-action-btn" onclick="showCharacteristicCurve()">Характеристическая кривая</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Регулировка" -->
+            <div class="tab-pane" id="tab-adjustments">
+                <div class="tab-section">
+                    <h4>Основные настройки</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showRotateScaleModal()">Поворот/Масштабирование</button>
+                        <button class="tab-action-btn" onclick="showWindowFunctions()">Функции окна</button>
+                        <button class="tab-action-btn" onclick="showBrightnessContrast()">Яркость/Контраст</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Цветокоррекция</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showColorBalance()">Баланс цвета</button>
+                        <button class="tab-action-btn" onclick="showHueSaturation()">Тон/Насыщенность</button>
+                        <button class="tab-action-btn" onclick="showLevelsModal()">Уровни</button>
+                        <button class="tab-action-btn" onclick="showCurvesModal()">Кривые</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Фигуры" -->
+            <div class="tab-pane" id="tab-shapes">
+                <div class="tab-section">
+                    <h4>Выберите фигуру для добавления</h4>
+                    <div class="shapes-grid">
+                        <button class="shape-btn-large" onclick="setShape('line')" title="Линия"><span class="shape-icon">╱</span><span class="shape-label">Линия</span></button>
+                        <button class="shape-btn-large" onclick="setShape('rect')" title="Прямоугольник"><span class="shape-icon">▢</span><span class="shape-label">Прямоугольник</span></button>
+                        <button class="shape-btn-large" onclick="setShape('ellipse')" title="Эллипс"><span class="shape-icon">◯</span><span class="shape-label">Эллипс</span></button>
+                        <button class="shape-btn-large" onclick="setShape('triangle')" title="Треугольник"><span class="shape-icon">△</span><span class="shape-label">Треугольник</span></button>
+                        <button class="shape-btn-large" onclick="setShape('star')" title="Звезда"><span class="shape-icon">☆</span><span class="shape-label">Звезда</span></button>
+                        <button class="shape-btn-large" onclick="setShape('arrow')" title="Стрелка"><span class="shape-icon">→</span><span class="shape-label">Стрелка</span></button>
+                        <button class="shape-btn-large" onclick="setShape('heart')" title="Сердце"><span class="shape-icon">♡</span><span class="shape-label">Сердце</span></button>
+                        <button class="shape-btn-large" onclick="setShape('diamond')" title="Ромб"><span class="shape-icon">◇</span><span class="shape-label">Ромб</span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Инструменты" -->
+            <div class="tab-pane" id="tab-tools">
+                <div class="tab-section">
+                    <h4>Скрипты</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showCodeLab()">Code Lab</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>СРТИ</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="applySRTIFix()">Исправить</button>
+                        <button class="tab-action-btn" onclick="applySRTIFilter()">Фильтр СРТИ</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Фотохронометрия</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="applyFHMFilter()">Фильтр ФХМ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- <input type="file" id="fileInput" accept=".tpt" onchange="loadImage(event)" multiple> -->
     <input type="file" id="run" accept=".tpt"  multiple>
     
