@@ -1560,3 +1560,79 @@ input, textarea, select,
     border-bottom: 1px solid #ccc;
     transition: background 0.2s, color 0.2s;
 }
+
+/* Выравнивание элементов во вкладке "Файл" */
+#tab-file.active {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/* Оформление ribbon-группы внутри вкладок в стиле tab-section */
+.tab-pane .ribbon-group {
+    background: var(--background-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin: 0;
+    min-width: 200px;
+    max-width: 280px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: none; /* убираем вертикальную черту */
+}
+
+/* Растягиваем контейнер кнопок на всю ширину */
+.tab-pane .ribbon-group .ribbon-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* (Опционально) делаем саму кнопку такой же высоты, как tab-action-btn */
+.tab-pane .ribbon-group .ribbon-btn-large {
+    width: 100%;
+    height: auto;
+    padding: 8px 14px;
+    font-size: 12px;
+}
+
+/* Выравнивание элементов во вкладке "Файл" */
+#tab-file.active {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/* Оформление ribbon-группы внутри вкладок в стиле tab-section */
+.tab-pane .ribbon-group {
+    background: var(--background-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin: 0;
+    min-width: 200px;
+    max-width: 280px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: none; /* убираем вертикальную черту */
+}
+
+/* Растягиваем контейнер кнопок на всю ширину */
+.tab-pane .ribbon-group .ribbon-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* (Опционально) делаем саму кнопку такой же высоты, как tab-action-btn */
+.tab-pane .ribbon-group .ribbon-btn-large {
+    width: 100%;
+    height: auto;
+    padding: 8px 14px;
+    font-size: 12px;
+}
