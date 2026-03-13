@@ -1353,3 +1353,65 @@ input, textarea, select,
     border-bottom: 1px solid #ccc;
     transition: background 0.2s, color 0.2s;
 }
+/* Tab Menu Bar Styles */
+.tab-menu-bar {
+    background: var(--background-secondary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    padding: 0 8px;
+    gap: 2px;
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-menu-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    transition: all var(--transition-fast);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    font-weight: 500;
+}
+
+.tab-menu-item:hover {
+    background: var(--primary-light);
+    color: var(--primary-color);
+}
+
+.tab-menu-item.active {
+    background: var(--background-secondary);
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-menu-item .icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.tab-content-container {
+    background: var(--background-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 12px;
+    min-height: 40px;
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.dropdown-content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
