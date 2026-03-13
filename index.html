@@ -71,166 +71,6 @@
         </div>
     </div>
 
-    <!-- Содержимое табов -->
-    <div class="tab-content-container">
-        <!-- Tab: Файл -->
-        <div class="tab-content active" id="tab-file">
-            <div class="dropdown-item" onclick="document.getElementById('run').click()">
-                <svg class="icon"><use href="#icon-folder"></use></svg>
-                Открыть
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Открыть недавние ➡</div>
-                <div class="dropdown-submenu-content" id="recentFilesList"></div>
-            </div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-item">Закрыть</div>
-            <div class="dropdown-item">Закрыть все</div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-item" onclick="showSaveModal()">
-                <svg class="icon"><use href="#icon-save"></use></svg>
-                Сохранить
-            </div>
-            <div class="dropdown-item">Сохранить все</div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-item" onclick="showServerCommander()">
-                <svg class="icon"><use href="#icon-server"></use></svg> Управление сервером
-            </div>
-        </div>
-        <!-- Tab: Правка -->
-        <div class="tab-content" id="tab-edit">
-            <div class="dropdown-item" onclick="undo()">
-                <svg class="icon"><use href="#icon-undo"></use></svg> Отменить (Ctrl+Z)
-            </div>
-            <div class="dropdown-item" onclick="redo()">
-                <svg class="icon"><use href="#icon-redo"></use></svg> Повторить (Ctrl+Y)
-            </div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-item">Выбрать все</div>
-            <div class="dropdown-item">Очистить всё</div>
-            <div class="dropdown-item" onclick="showHistoryModal()">
-                <svg class="icon"><use href="#icon-history"></use></svg> История (Ctrl+H)
-            </div>
-        </div>
-        <!-- Tab: Вид -->
-        <div class="tab-content" id="tab-view">
-            <div class="dropdown-item" onclick="zoomIn()">Увеличить</div>
-            <div class="dropdown-item" onclick="zoomOut()">Уменьшить</div>
-            <div class="dropdown-item" onclick="zoomReset()">100%</div>
-        </div>
-        <!-- Tab: Изображение -->
-        <div class="tab-content" id="tab-image">
-            <div class="dropdown-item">Обрезать по выделенному</div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Обрезка</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item" onclick="cropToSelection()">По выделению</div>
-                    <div class="dropdown-item" onclick="cropToContent()">По содержимому</div>
-                    <div class="dropdown-item" onclick="cropCustom()">Произвольная...</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Повернуть на 90°</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item" onclick="rotateCanvas(90)">↻ На 90° вправо</div>
-                    <div class="dropdown-item" onclick="rotateCanvas(-90)">↺ На 90° влево</div>
-                    <div class="dropdown-item" onclick="rotateCanvas(180)">↻ На 180°</div>
-                    <div class="dropdown-item" onclick="rotateCanvasCustom()">Произвольный...</div>
-                </div>
-            </div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-item">↔ Отразить по горизонтали</div>
-            <div class="dropdown-item">↕ Отразить по вертикали</div>
-        </div>
-        <!-- Tab: Регулировка -->
-        <div class="tab-content" id="tab-adjust">
-            <div class="dropdown-item">Поворот/Масштабирование</div>
-            <div class="dropdown-item">Функции окна</div>
-            <div class="dropdown-item">Яркость/Контраст</div>
-        </div>
-        <!-- Tab: Фильтры -->
-        <div class="tab-content" id="tab-filters">
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Выделение контуров ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item">Контур</div>
-                    <div class="dropdown-item">Определение границ</div>
-                    <div class="dropdown-item">Рельеф</div>
-                    <div class="dropdown-item" onclick="applySobelFilter()">Фильтр Edge</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Поиск объектов ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item">Калькулятор смещений</div>
-                    <div class="dropdown-item">Ось семетрии</div>
-                    <div class="dropdown-item">Поиск окружности</div>
-                    <div class="dropdown-item">Центральный детектор</div>
-                    <div class="dropdown-item">Центровка Ракурсов</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Предварительная обработка ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item" onclick="showApproximationModal()">Аппроксимация поверхностью</div>
-                    <div class="dropdown-item">Арифметический калькулятор</div>
-                    <div class="dropdown-item">Вычисление параболоида</div>
-                    <div class="dropdown-item">Вычисление плоскости</div>
-                    <div class="dropdown-item">Обработка по цилиндрическому клину</div>
-                    <div class="dropdown-item">Оптическая плотность</div>
-                    <div class="dropdown-item" onclick="applyLogorifmFilter()">Предобработка</div>
-                    <div class="dropdown-item">Удаление полос сканера</div>
-                    <div class="dropdown-item">Устранение точечных дефектов</div>
-                    <div class="dropdown-item">Характеричтическая кривая</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Скрипты ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item">Code Lab</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">СРТИ ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item">Исправить</div>
-                    <div class="dropdown-item">Фильтр СРТИ</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Фотохронометрия ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item">Фильтр ФХМ</div>
-                </div>
-            </div>
-            <div class="dropdown-submenu">
-                <div class="dropdown-item">Эмуляция искажения ➡</div>
-                <div class="dropdown-submenu-content">
-                    <div class="dropdown-item">Имитация фокального пятна источника</div>
-                    <div class="dropdown-item">Отсечение внешней области</div>
-                    <div class="dropdown-item">Равномерное разбиение</div>
-                    <div class="dropdown-item">Шум</div>
-                </div>
-            </div>
-            <div class="dropdown-separator"></div>
-            <div class="dropdown-item">SmartDeblur</div>
-            <div class="dropdown-item">StatisticFilter</div>
-            <div class="dropdown-item">Анизотропный фильтр</div>
-            <div class="dropdown-item">Билатеральный фильтр</div>
-            <div class="dropdown-item">Гистограмма</div>
-            <div class="dropdown-item" onclick="showMedianModal()">Медианный фильтра</div>
-            <div class="dropdown-item">Медианный(по локальной гистрограмме)</div>
-            <div class="dropdown-item">Негатив</div>
-            <div class="dropdown-item" onclick="showNormalisatioModal()">Нормировка</div>
-            <div class="dropdown-item">Повышение контраста</div>
-            <div class="dropdown-item" onclick="showThresholdModal()">Порог</div>
-            <div class="dropdown-item">Резкость</div>
-        </div>
-    </div>
-
-
     <!-- Ribbon-панель для быстрого доступа к функциям -->
     <div class="ribbon">
 
@@ -287,98 +127,12 @@
         </div>
 
 
-        <!-- Контейнер для группы кнопок ленточки (например, раздел "Файл") -->
-        <div class="ribbon-group">
-            <!-- Внутренняя группа кнопок с конкретными действиями -->
-            <div class="ribbon-buttons">
-                <!-- Кнопка "Загрузить" с большим стилем и иконкой -->
-                <button class="ribbon-btn ribbon-btn-large" onclick="showLoadMethodModal()" title="Загрузить">
-                     <!-- Иконка кнопки (путь к файлу) -->
-                    <svg class="ribbon-icon"><use href="#icon-folder"></use></svg>
-                </button>
-                <!-- Кнопка "Сохранить" с аналогичным стилем -->
-                <button class="ribbon-btn ribbon-btn-large" onclick="showSaveMethodModal()" title="Сохранить">
-                    <!-- Иконка кнопки (путь к файлу) -->
-                    <svg class="ribbon-icon"><use href="#icon-save"></use></svg>
-                </button>
-            </div>
-            <!-- Заголовок группы кнопок (появляется над кнопками, если нужно) -->
-            <span class="ribbon-group-title">Файл</span>
-        </div>
-        <!-- Скрытый (или скрытый по умолчанию) input для выбора файла -->
-        <!-- Используется в функциях showLoadMethodModal() и showSaveMethodModal() -->
-        <input type="file" id="fileInputTest">
-
-
-
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="undo()" title="Отменить">↩</button>
-                <button class="ribbon-btn" onclick="redo()" title="Повторить">↪</button>
-            </div>
-            <span class="ribbon-group-title">История</span>
+        <!-- Контейнер для групп
         </div>
 
-        <!-- <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="copySelection()" title="Копировать">📋</button>
-                <button class="ribbon-btn" onclick="pasteFromClipboard()" title="Вставить">📌</button>
-                <button class="ribbon-btn" onclick="cutSelection()" title="Вырезать">✂</button>
-            </div>
-            <span class="ribbon-group-title">Буфер</span>
-        </div> -->
-
-        <!-- <div class="ribbon-group">
-            <div class="ribbon-buttons" style="position: relative;">
-                <button class="ribbon-btn" id="shapesBtn" onclick="toggleShapesPanel()" title="Фигуры">⬡</button>
-                <div class="shapes-panel" id="shapesPanel">
-                    <button class="shape-btn" onclick="setShape('line')" title="Линия">╱</button>
-                    <button class="shape-btn" onclick="setShape('rect')" title="Прямоугольник">▢</button>
-                    <button class="shape-btn" onclick="setShape('ellipse')" title="Эллипс">◯</button>
-                    <button class="shape-btn" onclick="setShape('triangle')" title="Треугольник">△</button>
-                    <button class="shape-btn" onclick="setShape('star')" title="Звезда">☆</button>
-                    <button class="shape-btn" onclick="setShape('arrow')" title="Стрелка">→</button>
-                    <button class="shape-btn" onclick="setShape('heart')" title="Сердце">♡</button>
-                    <button class="shape-btn" onclick="setShape('diamond')" title="Ромб">◇</button>
-                </div>
-            </div>
-            <span class="ribbon-group-title">Фигуры</span>
-        </div> -->
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="rotateCanvas(90)" title="Повернуть на 90°">↻</button>
-                <button class="ribbon-btn" onclick="flipCanvas('horizontal')" title="Отразить по горизонтали">↔</button>
-                <button class="ribbon-btn" onclick="flipCanvas('vertical')" title="Отразить по вертикали">↕</button>
-            </div>
-            <span class="ribbon-group-title">Поворот</span>
-        </div>
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomIn()" title="Увеличить">🔍+</button>
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomReset()" title="Сбросить">Сброс</button>
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomOut()" title="Уменьшить">🔍-</button>
-            </div>
-            <span class="ribbon-group-title">Масштаб</span>
-        </div>
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button id="button-link" class="ribbon-btn">
-                    <svg class="ribbon-icon"><use href="#icon-workflow"></use></svg>
-
-                    <a href="workflow.html" class="btn-link">Workflow</a>
-                </button>
-            </div>
-            <span class="ribbon-group-title">Режимы</span>
-        </div>
-        
     </div>
 
-    <!-- Скрытый input для загрузки изображений -->
-    <!-- <input type="file" id="fileInput" accept=".tpt" onchange="loadImage(event)" multiple> -->
+    <!-- Скрытый input для загрузки изображений --> <!-- <input type="file" id="fileInput" accept=".tpt" onchange="loadImage(event)" multiple> -->
     <input type="file" id="run" accept=".tpt"  multiple>
     
     <!-- Основной контейнер с панелью инструментов и холстом -->
@@ -1182,7 +936,7 @@
     <script src="scripts/server.js"></script>
     <script src="scripts/modals.js"></script>
     <script>
-        // Функция переключения табов - теперь содержимое отображается в Ribbon
+        // Функция переключения табов - только переключение визуального состояния
         function switchTab(tabId) {
             // Убираем активный класс со всех табов
             document.querySelectorAll('.tab-menu-item').forEach(function(tab) {
@@ -1193,41 +947,7 @@
             if (activeTab) {
                 activeTab.classList.add('active');
             }
-            
-            // Скрываем все контенты табов
-            document.querySelectorAll('.tab-content').forEach(function(content) {
-                content.classList.remove('active');
-            });
-            // Показываем контент выбранного таба в Ribbon
-            var activeContent = document.getElementById('tab-' + tabId);
-            if (activeContent) {
-                activeContent.classList.add('active');
-                
-                // Перемещаем содержимое таба в Ribbon-панель
-                var ribbon = document.querySelector('.ribbon');
-                var existingTabContent = ribbon.querySelector('.tab-content-in-ribbon');
-                if (existingTabContent) {
-                    existingTabContent.remove();
-                }
-                
-                // Клонируем содержимое таба и добавляем в начало Ribbon
-                var clonedContent = activeContent.cloneNode(true);
-                clonedContent.id = '';
-                clonedContent.className = 'tab-content-in-ribbon';
-                clonedContent.style.display = 'flex';
-                clonedContent.style.alignItems = 'center';
-                clonedContent.style.gap = '4px';
-                
-                // Вставляем после первой группы (открытые файлы)
-                var firstGroup = ribbon.querySelector('.ribbon-group');
-                if (firstGroup && firstGroup.nextSibling) {
-                    ribbon.insertBefore(clonedContent, firstGroup.nextSibling);
-                } else {
-                    ribbon.appendChild(clonedContent);
-                }
-            }
         }
-
         console.log('Новый интерфейс: http://dev.wtis.wfront.svk.sils.local/new_int');
         console.log('WorkFlow: http://dev.wtis.wfront.svk.sils.local/workflow');
         console.log('Просмотр иконок: http://dev.wtis.wfront.svk.sils.local/viewIcons');
