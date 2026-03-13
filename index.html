@@ -43,8 +43,8 @@
         <symbol id="icon-image" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></symbol>
     </svg>
     
-    <!-- Основное меню приложения -->
-    <div class="menu-bar">
+    <!-- Основное меню приложения (скрыто) -->
+    <div class="menu-bar" style="display: none;">
         <div class="dropdown">
             <div class="menu-item">Файл</div>
             <div class="dropdown-content">
@@ -260,8 +260,8 @@
     <!-- Ribbon-панель для быстрого доступа к функциям -->
     <div class="ribbon">
 
-        <!-- НОВАЯ ГРУППА: Открытые файлы -->
-        <div class="ribbon-group">
+        <!-- ГРУППА: Открытые файлы (постоянная, не меняется от вкладки) -->
+        <div class="ribbon-group" id="ribbonFilesGroup">
             <div class="ribbon-buttons" style="position: relative;">
                 <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
                     <!-- Превью активного файла (если есть) -->
@@ -312,98 +312,220 @@
             <span class="ribbon-group-title">Файлы</span>
         </div>
 
-
-        <!-- Контейнер для группы кнопок ленточки (например, раздел "Файл") -->
-        <div class="ribbon-group">
-            <!-- Внутренняя группа кнопок с конкретными действиями -->
-            <div class="ribbon-buttons">
-                <!-- Кнопка "Загрузить" с большим стилем и иконкой -->
-                <button class="ribbon-btn ribbon-btn-large" onclick="showLoadMethodModal()" title="Загрузить">
-                     <!-- Иконка кнопки (путь к файлу) -->
-                    <svg class="ribbon-icon"><use href="#icon-folder"></use></svg>
-                </button>
-                <!-- Кнопка "Сохранить" с аналогичным стилем -->
-                <button class="ribbon-btn ribbon-btn-large" onclick="showSaveMethodModal()" title="Сохранить">
-                    <!-- Иконка кнопки (путь к файлу) -->
-                    <svg class="ribbon-icon"><use href="#icon-save"></use></svg>
-                </button>
-            </div>
-            <!-- Заголовок группы кнопок (появляется над кнопками, если нужно) -->
-            <span class="ribbon-group-title">Файл</span>
-        </div>
-        <!-- Скрытый (или скрытый по умолчанию) input для выбора файла -->
-        <!-- Используется в функциях showLoadMethodModal() и showSaveMethodModal() -->
-        <input type="file" id="fileInputTest">
-
-
-
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="undo()" title="Отменить">↩</button>
-                <button class="ribbon-btn" onclick="redo()" title="Повторить">↪</button>
-            </div>
-            <span class="ribbon-group-title">История</span>
-        </div>
-
-        <!-- <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="copySelection()" title="Копировать">📋</button>
-                <button class="ribbon-btn" onclick="pasteFromClipboard()" title="Вставить">📌</button>
-                <button class="ribbon-btn" onclick="cutSelection()" title="Вырезать">✂</button>
-            </div>
-            <span class="ribbon-group-title">Буфер</span>
-        </div> -->
-
-        <!-- <div class="ribbon-group">
-            <div class="ribbon-buttons" style="position: relative;">
-                <button class="ribbon-btn" id="shapesBtn" onclick="toggleShapesPanel()" title="Фигуры">⬡</button>
-                <div class="shapes-panel" id="shapesPanel">
-                    <button class="shape-btn" onclick="setShape('line')" title="Линия">╱</button>
-                    <button class="shape-btn" onclick="setShape('rect')" title="Прямоугольник">▢</button>
-                    <button class="shape-btn" onclick="setShape('ellipse')" title="Эллипс">◯</button>
-                    <button class="shape-btn" onclick="setShape('triangle')" title="Треугольник">△</button>
-                    <button class="shape-btn" onclick="setShape('star')" title="Звезда">☆</button>
-                    <button class="shape-btn" onclick="setShape('arrow')" title="Стрелка">→</button>
-                    <button class="shape-btn" onclick="setShape('heart')" title="Сердце">♡</button>
-                    <button class="shape-btn" onclick="setShape('diamond')" title="Ромб">◇</button>
-                </div>
-            </div>
-            <span class="ribbon-group-title">Фигуры</span>
-        </div> -->
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="rotateCanvas(90)" title="Повернуть на 90°">↻</button>
-                <button class="ribbon-btn" onclick="flipCanvas('horizontal')" title="Отразить по горизонтали">↔</button>
-                <button class="ribbon-btn" onclick="flipCanvas('vertical')" title="Отразить по вертикали">↕</button>
-            </div>
-            <span class="ribbon-group-title">Поворот</span>
-        </div>
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomIn()" title="Увеличить">🔍+</button>
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomReset()" title="Сбросить">Сброс</button>
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomOut()" title="Уменьшить">🔍-</button>
-            </div>
-            <span class="ribbon-group-title">Масштаб</span>
-        </div>
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button id="button-link" class="ribbon-btn">
-                    <svg class="ribbon-icon"><use href="#icon-workflow"></use></svg>
-
-                    <a href="workflow.html" class="btn-link">Workflow</a>
-                </button>
-            </div>
-            <span class="ribbon-group-title">Режимы</span>
-        </div>
+        <!-- Динамический контент ribbon (меняется от вкладки) -->
+        <div id="ribbonDynamicContent"></div>
         
     </div>
 
     <!-- Скрытый input для загрузки изображений -->
+
+    <!-- Панель вкладок (Tabs) -->
+    <div class="tabs-container">
+        <!-- Поле с файлами теперь внутри tabs-container -->
+        <div class="tabs-file-field" id="tabsFileField" style="display: none;">
+            <div class="tabs-file-field-content">
+                <span class="tabs-file-label">Файл:</span>
+                <span class="tabs-file-name" id="tabsFileName">Безымянный</span>
+            </div>
+        </div>
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="file">Файл</button>
+            <button class="tab-btn" data-tab="edit">Правка</button>
+            <button class="tab-btn" data-tab="view">Вид</button>
+            <button class="tab-btn" data-tab="image">Изображение</button>
+            <button class="tab-btn" data-tab="filters">Фильтры</button>
+            <button class="tab-btn" data-tab="adjustments">Регулировка</button>
+            <button class="tab-btn" data-tab="shapes">Фигуры</button>
+            <button class="tab-btn" data-tab="tools">Инструменты</button>
+        </div>
+        <div class="tabs-content">
+            <!-- Контент вкладки "Файл" -->
+            <div class="tab-pane active" id="tab-file">
+                <div class="tab-section">
+                    <h4>Управление файлами</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showLoadMethodModal()">
+                            <svg class="icon"><use href="#icon-folder"></use></svg> Открыть
+                        </button>
+                        <button class="tab-action-btn" onclick="showSaveMethodModal()">
+                            <svg class="icon"><use href="#icon-save"></use></svg> Сохранить
+                        </button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Недавние файлы</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showRecentFilesModal()">
+                            <svg class="icon"><use href="#icon-history"></use></svg> История файлов
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Правка" -->
+            <div class="tab-pane" id="tab-edit">
+                <div class="tab-section">
+                    <h4>История действий</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="undo()">
+                            <svg class="icon"><use href="#icon-undo"></use></svg> Отменить (Ctrl+Z)
+                        </button>
+                        <button class="tab-action-btn" onclick="redo()">
+                            <svg class="icon"><use href="#icon-redo"></use></svg> Повторить (Ctrl+Y)
+                        </button>
+                        <button class="tab-action-btn" onclick="showHistoryModal()">
+                            <svg class="icon"><use href="#icon-history"></use></svg> История (Ctrl+H)
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Вид" -->
+            <div class="tab-pane" id="tab-view">
+                <div class="tab-section">
+                    <h4>Масштаб</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="zoomIn()">
+                            <svg class="icon"><use href="#icon-zoom-in"></use></svg> Увеличить
+                        </button>
+                        <button class="tab-action-btn" onclick="zoomOut()">
+                            <svg class="icon"><use href="#icon-zoom-out"></use></svg> Уменьшить
+                        </button>
+                        <button class="tab-action-btn" onclick="zoomReset()">100%</button>
+                        <button class="tab-action-btn" onclick="fitImageToScreen()">По размеру окна</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Изображение" -->
+            <div class="tab-pane" id="tab-image">
+                <div class="tab-section">
+                    <h4>Обрезка</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="cropToSelection()">
+                            <svg class="icon"><use href="#icon-crop"></use></svg> По выделению
+                        </button>
+                        <button class="tab-action-btn" onclick="cropToContent()">По содержимому</button>
+                        <button class="tab-action-btn" onclick="cropCustom()">Произвольная...</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Поворот</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="rotateCanvas(90)">↻ На 90° вправо</button>
+                        <button class="tab-action-btn" onclick="rotateCanvas(-90)">↺ На 90° влево</button>
+                        <button class="tab-action-btn" onclick="rotateCanvas(180)">↻ На 180°</button>
+                        <button class="tab-action-btn" onclick="rotateCanvasCustom()">Произвольный...</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Отражение</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="flipCanvas('horizontal')">
+                            <svg class="icon"><use href="#icon-flip-h"></use></svg> По горизонтали
+                        </button>
+                        <button class="tab-action-btn" onclick="flipCanvas('vertical')">
+                            <svg class="icon"><use href="#icon-flip-v"></use></svg> По вертикали
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Фильтры" -->
+            <div class="tab-pane" id="tab-filters">
+                <div class="tab-section">
+                    <h4>Выделение контуров</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="applyEdgeFilter()">Контур</button>
+                        <button class="tab-action-btn" onclick="applyEdgeDetection()">Определение границ</button>
+                        <button class="tab-action-btn" onclick="applyReliefFilter()">Рельеф</button>
+                        <button class="tab-action-btn" onclick="applySobelFilter()"><img src="images/SobelEffectPluginIcon.png" alt=""> Фильтр Edge</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Поиск объектов</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showOffsetCalculator()">Калькулятор смещений</button>
+                        <button class="tab-action-btn" onclick="showSymmetryAxis()">Ось симметрии</button>
+                        <button class="tab-action-btn" onclick="showCircleDetector()">Поиск окружности</button>
+                        <button class="tab-action-btn" onclick="showCenterDetector()">Центральный детектор</button>
+                        <button class="tab-action-btn" onclick="showViewCentering()">Центровка Ракурсов</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Предварительная обработка</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showApproximationModal()"><img src="images/ApproximationEffectPluginIcon.png" alt=""> Аппроксимация поверхностью</button>
+                        <button class="tab-action-btn" onclick="showArithmeticCalculator()">Арифметический калькулятор</button>
+                        <button class="tab-action-btn" onclick="showParaboloidCalc()">Вычисление параболоида</button>
+                        <button class="tab-action-btn" onclick="showPlaneCalc()">Вычисление плоскости</button>
+                        <button class="tab-action-btn" onclick="showKozlowskiSurface()">Вычисление поверхности Козловского</button>
+                        <button class="tab-action-btn" onclick="showCylindricalWedge()">Обработка по цилиндрическому клину</button>
+                        <button class="tab-action-btn" onclick="showOpticalDensity()">Оптическая плотность</button>
+                        <button class="tab-action-btn" onclick="applyLogorifmFilter()"><img src="images/PrelimProcess.png" alt=""> Предобработка</button>
+                        <button class="tab-action-btn" onclick="showScannerBandsRemoval()">Удаление полос сканера</button>
+                        <button class="tab-action-btn" onclick="showDefectRemoval()">Устранение точечных дефектов</button>
+                        <button class="tab-action-btn" onclick="showCharacteristicCurve()">Характеристическая кривая</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Регулировка" -->
+            <div class="tab-pane" id="tab-adjustments">
+                <div class="tab-section">
+                    <h4>Основные настройки</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showRotateScaleModal()">Поворот/Масштабирование</button>
+                        <button class="tab-action-btn" onclick="showWindowFunctions()">Функции окна</button>
+                        <button class="tab-action-btn" onclick="showBrightnessContrast()">Яркость/Контраст</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Цветокоррекция</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showColorBalance()">Баланс цвета</button>
+                        <button class="tab-action-btn" onclick="showHueSaturation()">Тон/Насыщенность</button>
+                        <button class="tab-action-btn" onclick="showLevelsModal()">Уровни</button>
+                        <button class="tab-action-btn" onclick="showCurvesModal()">Кривые</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Фигуры" -->
+            <div class="tab-pane" id="tab-shapes">
+                <div class="tab-section">
+                    <h4>Выберите фигуру для добавления</h4>
+                    <div class="shapes-grid">
+                        <button class="shape-btn-large" onclick="setShape('line')" title="Линия"><span class="shape-icon">╱</span><span class="shape-label">Линия</span></button>
+                        <button class="shape-btn-large" onclick="setShape('rect')" title="Прямоугольник"><span class="shape-icon">▢</span><span class="shape-label">Прямоугольник</span></button>
+                        <button class="shape-btn-large" onclick="setShape('ellipse')" title="Эллипс"><span class="shape-icon">◯</span><span class="shape-label">Эллипс</span></button>
+                        <button class="shape-btn-large" onclick="setShape('triangle')" title="Треугольник"><span class="shape-icon">△</span><span class="shape-label">Треугольник</span></button>
+                        <button class="shape-btn-large" onclick="setShape('star')" title="Звезда"><span class="shape-icon">☆</span><span class="shape-label">Звезда</span></button>
+                        <button class="shape-btn-large" onclick="setShape('arrow')" title="Стрелка"><span class="shape-icon">→</span><span class="shape-label">Стрелка</span></button>
+                        <button class="shape-btn-large" onclick="setShape('heart')" title="Сердце"><span class="shape-icon">♡</span><span class="shape-label">Сердце</span></button>
+                        <button class="shape-btn-large" onclick="setShape('diamond')" title="Ромб"><span class="shape-icon">◇</span><span class="shape-label">Ромб</span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Инструменты" -->
+            <div class="tab-pane" id="tab-tools">
+                <div class="tab-section">
+                    <h4>Скрипты</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showCodeLab()">Code Lab</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>СРТИ</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="applySRTIFix()">Исправить</button>
+                        <button class="tab-action-btn" onclick="applySRTIFilter()">Фильтр СРТИ</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Фотохронометрия</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="applyFHMFilter()">Фильтр ФХМ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- <input type="file" id="fileInput" accept=".tpt" onchange="loadImage(event)" multiple> -->
     <input type="file" id="run" accept=".tpt"  multiple>
     
