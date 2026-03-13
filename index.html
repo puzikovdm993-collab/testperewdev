@@ -260,7 +260,7 @@
     <!-- Ribbon-панель для быстрого доступа к функциям -->
     <div class="ribbon">
 
-        <!-- НОВАЯ ГРУППА: Открытые файлы -->
+        <!-- ГРУППА: Открытые файлы (постоянная, не меняется от вкладки) -->
         <div class="ribbon-group">
             <div class="ribbon-buttons" style="position: relative;">
                 <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
@@ -312,94 +312,6 @@
             <span class="ribbon-group-title">Файлы</span>
         </div>
 
-
-        <!-- Контейнер для группы кнопок ленточки (например, раздел "Файл") -->
-        <div class="ribbon-group">
-            <!-- Внутренняя группа кнопок с конкретными действиями -->
-            <div class="ribbon-buttons">
-                <!-- Кнопка "Загрузить" с большим стилем и иконкой -->
-                <button class="ribbon-btn ribbon-btn-large" onclick="showLoadMethodModal()" title="Загрузить">
-                     <!-- Иконка кнопки (путь к файлу) -->
-                    <svg class="ribbon-icon"><use href="#icon-folder"></use></svg>
-                </button>
-                <!-- Кнопка "Сохранить" с аналогичным стилем -->
-                <button class="ribbon-btn ribbon-btn-large" onclick="showSaveMethodModal()" title="Сохранить">
-                    <!-- Иконка кнопки (путь к файлу) -->
-                    <svg class="ribbon-icon"><use href="#icon-save"></use></svg>
-                </button>
-            </div>
-            <!-- Заголовок группы кнопок (появляется над кнопками, если нужно) -->
-            <span class="ribbon-group-title">Файл</span>
-        </div>
-        <!-- Скрытый (или скрытый по умолчанию) input для выбора файла -->
-        <!-- Используется в функциях showLoadMethodModal() и showSaveMethodModal() -->
-        <input type="file" id="fileInputTest">
-
-
-
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="undo()" title="Отменить">↩</button>
-                <button class="ribbon-btn" onclick="redo()" title="Повторить">↪</button>
-            </div>
-            <span class="ribbon-group-title">История</span>
-        </div>
-
-        <!-- <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="copySelection()" title="Копировать">📋</button>
-                <button class="ribbon-btn" onclick="pasteFromClipboard()" title="Вставить">📌</button>
-                <button class="ribbon-btn" onclick="cutSelection()" title="Вырезать">✂</button>
-            </div>
-            <span class="ribbon-group-title">Буфер</span>
-        </div> -->
-
-        <!-- <div class="ribbon-group">
-            <div class="ribbon-buttons" style="position: relative;">
-                <button class="ribbon-btn" id="shapesBtn" onclick="toggleShapesPanel()" title="Фигуры">⬡</button>
-                <div class="shapes-panel" id="shapesPanel">
-                    <button class="shape-btn" onclick="setShape('line')" title="Линия">╱</button>
-                    <button class="shape-btn" onclick="setShape('rect')" title="Прямоугольник">▢</button>
-                    <button class="shape-btn" onclick="setShape('ellipse')" title="Эллипс">◯</button>
-                    <button class="shape-btn" onclick="setShape('triangle')" title="Треугольник">△</button>
-                    <button class="shape-btn" onclick="setShape('star')" title="Звезда">☆</button>
-                    <button class="shape-btn" onclick="setShape('arrow')" title="Стрелка">→</button>
-                    <button class="shape-btn" onclick="setShape('heart')" title="Сердце">♡</button>
-                    <button class="shape-btn" onclick="setShape('diamond')" title="Ромб">◇</button>
-                </div>
-            </div>
-            <span class="ribbon-group-title">Фигуры</span>
-        </div> -->
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn" onclick="rotateCanvas(90)" title="Повернуть на 90°">↻</button>
-                <button class="ribbon-btn" onclick="flipCanvas('horizontal')" title="Отразить по горизонтали">↔</button>
-                <button class="ribbon-btn" onclick="flipCanvas('vertical')" title="Отразить по вертикали">↕</button>
-            </div>
-            <span class="ribbon-group-title">Поворот</span>
-        </div>
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomIn()" title="Увеличить">🔍+</button>
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomReset()" title="Сбросить">Сброс</button>
-                <button class="ribbon-btn ribbon-btn-large" onclick="zoomOut()" title="Уменьшить">🔍-</button>
-            </div>
-            <span class="ribbon-group-title">Масштаб</span>
-        </div>
-
-        <div class="ribbon-group">
-            <div class="ribbon-buttons">
-                <button id="button-link" class="ribbon-btn">
-                    <svg class="ribbon-icon"><use href="#icon-workflow"></use></svg>
-
-                    <a href="workflow.html" class="btn-link">Workflow</a>
-                </button>
-            </div>
-            <span class="ribbon-group-title">Режимы</span>
-        </div>
         
     </div>
 
@@ -408,14 +320,106 @@
     <!-- Панель вкладок (Tabs) -->
     <div class="tabs-container">
         <div class="tabs-header">
-            <button class="tab-btn active" data-tab="filters">Фильтры</button>
+            <button class="tab-btn active" data-tab="file">Файл</button>
+            <button class="tab-btn" data-tab="edit">Правка</button>
+            <button class="tab-btn" data-tab="view">Вид</button>
+            <button class="tab-btn" data-tab="image">Изображение</button>
+            <button class="tab-btn" data-tab="filters">Фильтры</button>
             <button class="tab-btn" data-tab="adjustments">Регулировка</button>
             <button class="tab-btn" data-tab="shapes">Фигуры</button>
             <button class="tab-btn" data-tab="tools">Инструменты</button>
         </div>
         <div class="tabs-content">
+            <!-- Контент вкладки "Файл" -->
+            <div class="tab-pane active" id="tab-file">
+                <div class="tab-section">
+                    <h4>Управление файлами</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showLoadMethodModal()">
+                            <svg class="icon"><use href="#icon-folder"></use></svg> Открыть
+                        </button>
+                        <button class="tab-action-btn" onclick="showSaveMethodModal()">
+                            <svg class="icon"><use href="#icon-save"></use></svg> Сохранить
+                        </button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Недавние файлы</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="showRecentFilesModal()">
+                            <svg class="icon"><use href="#icon-history"></use></svg> История файлов
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Правка" -->
+            <div class="tab-pane" id="tab-edit">
+                <div class="tab-section">
+                    <h4>История действий</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="undo()">
+                            <svg class="icon"><use href="#icon-undo"></use></svg> Отменить (Ctrl+Z)
+                        </button>
+                        <button class="tab-action-btn" onclick="redo()">
+                            <svg class="icon"><use href="#icon-redo"></use></svg> Повторить (Ctrl+Y)
+                        </button>
+                        <button class="tab-action-btn" onclick="showHistoryModal()">
+                            <svg class="icon"><use href="#icon-history"></use></svg> История (Ctrl+H)
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Вид" -->
+            <div class="tab-pane" id="tab-view">
+                <div class="tab-section">
+                    <h4>Масштаб</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="zoomIn()">
+                            <svg class="icon"><use href="#icon-zoom-in"></use></svg> Увеличить
+                        </button>
+                        <button class="tab-action-btn" onclick="zoomOut()">
+                            <svg class="icon"><use href="#icon-zoom-out"></use></svg> Уменьшить
+                        </button>
+                        <button class="tab-action-btn" onclick="zoomReset()">100%</button>
+                        <button class="tab-action-btn" onclick="fitImageToScreen()">По размеру окна</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Контент вкладки "Изображение" -->
+            <div class="tab-pane" id="tab-image">
+                <div class="tab-section">
+                    <h4>Обрезка</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="cropToSelection()">
+                            <svg class="icon"><use href="#icon-crop"></use></svg> По выделению
+                        </button>
+                        <button class="tab-action-btn" onclick="cropToContent()">По содержимому</button>
+                        <button class="tab-action-btn" onclick="cropCustom()">Произвольная...</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Поворот</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="rotateCanvas(90)">↻ На 90° вправо</button>
+                        <button class="tab-action-btn" onclick="rotateCanvas(-90)">↺ На 90° влево</button>
+                        <button class="tab-action-btn" onclick="rotateCanvas(180)">↻ На 180°</button>
+                        <button class="tab-action-btn" onclick="rotateCanvasCustom()">Произвольный...</button>
+                    </div>
+                </div>
+                <div class="tab-section">
+                    <h4>Отражение</h4>
+                    <div class="tab-buttons">
+                        <button class="tab-action-btn" onclick="flipCanvas('horizontal')">
+                            <svg class="icon"><use href="#icon-flip-h"></use></svg> По горизонтали
+                        </button>
+                        <button class="tab-action-btn" onclick="flipCanvas('vertical')">
+                            <svg class="icon"><use href="#icon-flip-v"></use></svg> По вертикали
+                        </button>
+                    </div>
+                </div>
+            </div>
             <!-- Контент вкладки "Фильтры" -->
-            <div class="tab-pane active" id="tab-filters">
+            <div class="tab-pane" id="tab-filters">
                 <div class="tab-section">
                     <h4>Выделение контуров</h4>
                     <div class="tab-buttons">
