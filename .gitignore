@@ -1,1 +1,31 @@
-(empty)
+```
+# Web development artifacts
+*.html
+*.js
+
+# Dependencies
+node_modules/
+
+# Editors
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Coverage reports
+coverage/
+htmlcov/
+*.coverage
+
+# Distribution artifacts
+dist/
+build/
+```
