@@ -300,14 +300,26 @@
                         </button>
                     </div>
                 </div>
-                <!--         <div class="tab-section">
-                    <h4>Недавние файлы</h4>
-                    <div class="tab-buttons">
-                        <button class="tab-action-btn" onclick="showRecentFilesModal()">
-                            <svg class="icon"><use href="#icon-history"></use></svg> История файлов
+                <div class="ribbon-group">
+                    <div class="ribbon-buttons" style="position: relative;">
+                        <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
+                            <!-- Превью активного файла (если есть) -->
+                            <img id="activeFilePreview" src="" alt="Preview" style="display: none; width: 32px; height: 32px; object-fit: cover; border-radius: 4px; margin-right: 8px;">
+                            <svg class="icon"><use href="#icon-folder"></use></svg>
+                        </button>
+                        <div id="openFilesDropdown" class="dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 1000; min-width: 200px; max-height: 300px; overflow-y: auto;">
+                            <!-- Список открытых файлов -->
+                        </div>
+                    </div>
+                    <div class="ribbon-buttons">
+                        <button class="ribbon-btn" onclick="openAllFiles()" title="Открыть все файлы">
+                            <svg class="icon"><use href="#icon-folder"></use></svg>
+                        </button>
+                        <button class="ribbon-btn" onclick="closeAllFiles()" title="Закрыть все файлы">
+                            <svg class="icon"><use href="#icon-close"></use></svg>
                         </button>
                     </div>
-                </div> -->
+                </div>
             </div>
             <!-- Контент вкладки "Правка" -->
             <div class="tab-pane" id="tab-edit">
