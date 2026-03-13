@@ -279,101 +279,60 @@ function getColormap(name) {
 }
 
 /**
- * Применяет медианный фильтр к матрице m × n.
+ * Применяет медианный фильтр к матрице m × n с использованием Web Worker (v2).
  * @param {number[][]} matrix - Входная матрица (массив массивов).
  * @param {number} kernelSize - Размер окна фильтра (нечетное число, например 3).
  * @returns {Promise<number[][]>} - Отфильтрованная матрица.
  */
 async function _medianFilter(matrix, kernelSize) {
-    const m = matrix.length;
-    const n = matrix[0].length;
-    const padSize = Math.floor(kernelSize / 2);
-    
-    updateProgress(30, 'Создание расширенной матрицы...');
-    await new Promise(resolve => setTimeout(resolve, 50)); // Пауза для отрисовки
-    
-    const paddedMatrix = this._createPaddedMatrix(matrix, padSize);
-    const filteredMatrix = [];
-
-    const totalPixels = m * n;
-    let processedPixels = 0;
-    const updateInterval = Math.max(1, Math.floor(totalPixels / 100)); // Обновляем каждые 1%
-
-    for (let i = 0; i < m; i++) {
-        const row = [];
-        for (let j = 0; j < n; j++) {
-            // Извлекаем подматрицу (окрестность) размера kernelSize × kernelSize
-            const window = this._extractWindow(paddedMatrix, i + padSize, j + padSize, kernelSize);
-            // Находим медиану
-            const median = this._calculateMedian(window);
-            row.push(median);
+    return new Promise((resolve, reject) => {
+        // Создаем Web Worker
+        const worker = new Worker('scripts/median-filter-worker.js');
+        
+        const jobId = Date.now();
+        
+        // Обработчик сообщений от воркера
+        worker.onmessage = function(e) {
+            const { jobId: msgJobId, success, result, error, type, progress, message } = e.data;
             
-            processedPixels++;
-            
-            // Обновляем прогресс каждые 1% или в конце
-            if (processedPixels % updateInterval === 0 || processedPixels === totalPixels) {
-                const progress = Math.round(40 + (processedPixels / totalPixels) * 50);
-                updateProgress(progress, 'Фильтрация изображения...');
-                // Небольшая пауза для отрисовки прогресс-бара, но не слишком частая
-                if (processedPixels % (updateInterval * 5) === 0 || processedPixels === totalPixels) {
-                    await new Promise(resolve => setTimeout(resolve, 10));
-                }
+            // Обрабатываем сообщения о прогрессе
+            if (type === 'progress') {
+                updateProgress(progress, message);
+                return;
             }
-        }
-        filteredMatrix.push(row);
-    }
-
-    return filteredMatrix;
+            
+            // Проверяем что это ответ на наш запрос
+            if (msgJobId !== jobId) {
+                return;
+            }
+            
+            // Закрываем воркер
+            worker.terminate();
+            
+            if (success) {
+                resolve(result);
+            } else {
+                reject(new Error(error || 'Неизвестная ошибка при фильтрации'));
+            }
+        };
+        
+        // Обработчик ошибок воркера
+        worker.onerror = function(error) {
+            worker.terminate();
+            reject(new Error(`Ошибка воркера: ${error.message}`));
+        };
+        
+        // Отправляем данные в воркер
+        // Используем structured clone для передачи данных
+        worker.postMessage({
+            matrix: matrix.map(row => [...row]), // Копируем матрицу
+            kernelSize: kernelSize,
+            jobId: jobId
+        });
+    });
 }
 
-/**
-    * Создает расширенную матрицу с нулевыми границами для обработки краев.
-    */
- function _createPaddedMatrix(matrix, padSize) {
-    const m = matrix.length;
-    const n = matrix[0].length;
-    const padded = new Array(m + 2 * padSize);
-
-    for (let i = 0; i < padded.length; i++) {
-        padded[i] = new Array(n + 2 * padSize).fill(0);
-    }
-
-    // Копируем исходную матрицу в центр расширенной
-    for (let i = 0; i < m; i++) {
-        for (let j = 0; j < n; j++) {
-            padded[i + padSize][j + padSize] = matrix[i][j];
-        }
-    }
-
-    return padded;
-}
-
-/**
-    * Извлекает подматрицу (окрестность) вокруг точки (x, y).
-    */
- function _extractWindow(matrix, x, y, size) {
-    const half = Math.floor(size / 2);
-    const window = [];
-
-    for (let i = x - half; i <= x + half; i++) {
-        for (let j = y - half; j <= y + half; j++) {
-            window.push(matrix[i][j]);
-        }
-    }
-
-    return window;
-}
-
-/**
-    * Вычисляет медиану массива чисел.
-    */
- function _calculateMedian(arr) {
-    const sorted = [...arr].sort((a, b) => a - b);
-    const mid = Math.floor(sorted.length / 2);
-    return sorted.length % 2 !== 0 
-        ? sorted[mid] 
-        : (sorted[mid - 1] + sorted[mid]) / 2;
-}
+// Вспомогательные функции для медианного фильтра удалены - логика перенесена в median-filter-worker.js
 
 
 
@@ -490,10 +449,10 @@ async function applyMedianFilter() {
 const t = document.getElementById('newAperture').value;
 
     // Показываем модальное окно прогресса
-    showProgressModal('Поворот изображения', false);
+    showProgressModal('Медианный фильтр', false);
     // Используем setTimeout чтобы дать UI обновиться перед тяжелой операцией
     setTimeout(async () => {
-        updateProgress(20, 'Вычисление новых размеров...');
+        updateProgress(10, 'Инициализация фильтра...');
 
     const aprture = parseInt(t, 10);
     const filtered123 = await _medianFilter(file.matrix, aprture); 
@@ -501,7 +460,7 @@ const t = document.getElementById('newAperture').value;
     const width = file.matrix.length;
     const height = file.matrix[0].length;
 
- updateProgress(50, 'Создание повернутого изображения...');
+ updateProgress(90, 'Применение результатов...');
 
     const minVal = file.minValue;
     const maxVal = file.maxValue;

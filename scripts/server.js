@@ -730,6 +730,12 @@ function hideProgress() {
 }
 
 function updateProgress(percent, text) {
+    // Используем глобальную функцию updateProgress из modals.js если она существует
+    if (typeof window.updateProgress === 'function') {
+        window.updateProgress(percent, text);
+        return;
+    }
+    
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     
