@@ -260,58 +260,6 @@
     <!-- Ribbon-панель для быстрого доступа к функциям -->
     <div class="ribbon">
 
-        <!-- ГРУППА: Открытые файлы (постоянная, не меняется от вкладки) -->
-        <div class="ribbon-group" id="ribbonFilesGroup">
-            <div class="ribbon-buttons" style="position: relative;">
-                <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
-                    <!-- Превью активного файла (если есть) -->
-                    <canvas id="activeFileThumbCanvas" width="32" height="32" class="ribbon-btn-thumb" style="display: none;"></canvas>
-                    <img id="activeFileThumbImg" class="ribbon-btn-thumb" width="32" height="32" style="display: none;">
-                    <span class="ribbon-btn-label" id="currentFileLabel" style="display: none;">Безымянный</span>
-
-                    <div class="file-count-badge" id="fileCountBadge"style="display: none;">1</div>
-                </button>
-                <div class="open-files-dropdown" id="openFilesDropdown">
-                    <div class="open-files-header">
-                        <span>Открытые изображения</span>
-                        <button class="close-dropdown-btn" onclick="toggleOpenFilesDropdown()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="open-files-list" id="openFilesList">
-
-                        <div class="open-file-item active" data-file-id="1" onclick="switchToFile(1)">
-                            <div class="open-file-thumbnail">
-                                <div class="fas fa-image open-file-thumbnail-placeholder"></div>
-                            </div>
-                            <div class="open-file-info">
-                                <div class="open-file-name">Безымянный.png</div>
-                                <div class="open-file-details">
-                                    <span class="open-file-resolution">800×600</span>
-                                    <span class="open-file-format">PNG</span>
-                                </div>
-                            </div>
-                            <div class="open-file-actions">
-                                <button class="close-file-btn" onclick="closeFile(1, event)" title="Закрыть">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                
-                    </div>
-                    <div class="open-files-footer">
-                        <button class="footer-btn" onclick="openAllImages()">
-                            <i class="fas fa-folder-open"></i> Открыть все
-                        </button>
-                        <button class="footer-btn" onclick="closeAllImages()">
-                            <i class="fas fa-times-circle"></i> Закрыть все
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <span class="ribbon-group-title">Файлы</span>
-        </div>
-
         <!-- Динамический контент ribbon (меняется от вкладки) -->
         <div id="ribbonDynamicContent"></div>
         
