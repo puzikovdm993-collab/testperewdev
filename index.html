@@ -1182,7 +1182,7 @@
     <script src="scripts/server.js"></script>
     <script src="scripts/modals.js"></script>
     <script>
-        // Функция переключения табов
+        // Функция переключения табов - теперь содержимое отображается в Ribbon
         function switchTab(tabId) {
             // Убираем активный класс со всех табов
             document.querySelectorAll('.tab-menu-item').forEach(function(tab) {
@@ -1198,10 +1198,33 @@
             document.querySelectorAll('.tab-content').forEach(function(content) {
                 content.classList.remove('active');
             });
-            // Показываем контент выбранного таба
+            // Показываем контент выбранного таба в Ribbon
             var activeContent = document.getElementById('tab-' + tabId);
             if (activeContent) {
                 activeContent.classList.add('active');
+                
+                // Перемещаем содержимое таба в Ribbon-панель
+                var ribbon = document.querySelector('.ribbon');
+                var existingTabContent = ribbon.querySelector('.tab-content-in-ribbon');
+                if (existingTabContent) {
+                    existingTabContent.remove();
+                }
+                
+                // Клонируем содержимое таба и добавляем в начало Ribbon
+                var clonedContent = activeContent.cloneNode(true);
+                clonedContent.id = '';
+                clonedContent.className = 'tab-content-in-ribbon';
+                clonedContent.style.display = 'flex';
+                clonedContent.style.alignItems = 'center';
+                clonedContent.style.gap = '4px';
+                
+                // Вставляем после первой группы (открытые файлы)
+                var firstGroup = ribbon.querySelector('.ribbon-group');
+                if (firstGroup && firstGroup.nextSibling) {
+                    ribbon.insertBefore(clonedContent, firstGroup.nextSibling);
+                } else {
+                    ribbon.appendChild(clonedContent);
+                }
             }
         }
 
