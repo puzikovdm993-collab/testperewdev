@@ -2673,7 +2673,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Контент для ribbon-панели по каждой вкладке
     const ribbonContent = {
-        'file': `
+        'file': `\
             <div class="ribbon-group">
                 <div class="ribbon-buttons" style="position: relative;">
                     <button class="ribbon-btn ribbon-btn-large" id="openFilesDropdownBtn" title="Открытые файлы" onclick="toggleOpenFilesDropdown()">
