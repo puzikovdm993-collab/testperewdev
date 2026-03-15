@@ -1,3 +1,2 @@
-MODULES_GUIDE.md is a documentation file that should not be added to .gitignore. The change list contains only a source/config file (.md) and no build artifacts, dependencies, or temp files.
-
-(empty — output nothing)
+# No changes needed - only documentation file added
+# The added file ARCHITECTURE.md is a source/documentation file and should not be ignored
