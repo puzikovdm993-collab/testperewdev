@@ -1,0 +1,27 @@
+/* ============ Стили для неактивных кнопок ============ */
+
+/* Основные стили для disabled состояния кнопок */
+.tab-action-btn:disabled,
+.ribbon-btn:disabled {
+    opacity: 0.5;
+    background: #e5e7eb;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Отключение hover-эффектов для disabled кнопок */
+.tab-action-btn:disabled:hover,
+.ribbon-btn:disabled:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Полупрозрачные иконки в disabled кнопках */
+.tab-action-btn:disabled img,
+.ribbon-btn:disabled img {
+    opacity: 0.5;
+}

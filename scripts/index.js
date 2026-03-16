@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
     updateToolInfo();
     initRecentFiles();
     
+    // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
+    updateButtonsState();
+    
     // Инициализируем обработчик colorPicker после загрузки DOM
     if (dom.colorPicker) {
         dom.colorPicker.addEventListener('input', (e) => {
@@ -396,6 +399,34 @@ function updateOpenFilesList() {
     //document.getElementById("fileCountBadge").innerHTML = 2;
     // Обновляем превью для каждого файла
     updateFileThumbnails();
+    
+    // Обновляем состояние кнопок (активные/неактивные)
+    updateButtonsState();
+}
+
+// Конфигурация: список селекторов кнопок, которые нужно блокировать при отсутствии файлов
+// Редактируйте этот массив, чтобы добавлять или удалять кнопки из списка блокируемых
+const EDITING_BUTTONS_SELECTORS = [
+    '.tab-action-btn:not([onclick*="showLoadMethodModal"]):not([onclick*="showSaveMethodModal"])',
+    '.ribbon-btn:not(#openFilesDropdownBtn)'
+    // Добавьте сюда другие селекторы при необходимости, например:
+    // '#btn-crop',
+    // '#btn-rotate-left',
+    // '.my-custom-button-class'
+];
+
+// Обновление состояния кнопок (делает их неактивными если нет загруженных файлов)
+function updateButtonsState() {
+    const hasFiles = openFiles.length > 0;
+    
+    // Проходим по каждому селектору из конфигурируемого списка
+    EDITING_BUTTONS_SELECTORS.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        
+        elements.forEach(btn => {
+            btn.disabled = !hasFiles;
+        });
+    });
 }
 
 
