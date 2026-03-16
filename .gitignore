@@ -1,4 +1,26 @@
-# Changes specific files
-changes/README.md
-changes/scripts-changes.js
-changes/styles-changes.css
+# Changes M2 specific ignores
+changes_m2/*.tmp
+changes_m2/*.log
+changes_m2/node_modules/
+changes_m2/.env
+changes_m2/.env.local
+changes_m2/.vscode/
+changes_m2/.idea/
+
+# General ignores for any potential artifacts in the project
+*.pyc
+__pycache__/
+*.o
+*.obj
+dist/
+build/
+.venv/
+venv/
+node_modules/
+*.log
+*.tmp
+*.swp
+.env
+.env.local
+.vscode/
+.idea/

@@ -1,0 +1,30 @@
+/* 
+ * ИЗМЕНЕНИЯ М2: Стили для неактивных кнопок
+ * Добавляет визуальное отображение заблокированного состояния
+ */
+
+/* Основной стиль для отключенных кнопок действий */
+.tab-action-btn:disabled,
+.ribbon-btn:disabled {
+    opacity: 0.5;
+    background-color: #e5e7eb !important;
+    color: #9ca3af !important;
+    cursor: not-allowed;
+    pointer-events: none; /* Полностью блокирует клики */
+    border-color: #d1d5db !important;
+}
+
+/* Отключаем hover-эффекты для заблокированных кнопок */
+.tab-action-btn:disabled:hover,
+.ribbon-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: #e5e7eb !important;
+    color: #9ca3af !important;
+}
+
+/* Для кнопок с иконками */
+.tab-action-btn:disabled .icon,
+.ribbon-btn:disabled .icon {
+    opacity: 0.6;
+}
