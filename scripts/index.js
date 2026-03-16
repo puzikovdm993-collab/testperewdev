@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
     updateToolInfo();
     initRecentFiles();
     
+    // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
+    updateButtonsState();
+    
     // Инициализируем обработчик colorPicker после загрузки DOM
     if (dom.colorPicker) {
         dom.colorPicker.addEventListener('input', (e) => {
@@ -396,6 +399,24 @@ function updateOpenFilesList() {
     //document.getElementById("fileCountBadge").innerHTML = 2;
     // Обновляем превью для каждого файла
     updateFileThumbnails();
+    
+    // Обновляем состояние кнопок (активные/неактивные)
+    updateButtonsState();
+}
+
+// Обновление состояния кнопок (делает их неактивными если нет загруженных файлов)
+function updateButtonsState() {
+    const hasFiles = openFiles.length > 0;
+    
+    // Селекторы для всех кнопок которые должны быть неактивны без файлов
+    const buttonsToDisable = document.querySelectorAll(`
+        .tab-action-btn:not([onclick*="showLoadMethodModal"]):not([onclick*="showSaveMethodModal"]),
+        .ribbon-btn:not(#openFilesDropdownBtn)
+    `);
+    
+    buttonsToDisable.forEach(btn => {
+        btn.disabled = !hasFiles;
+    });
 }
 
 

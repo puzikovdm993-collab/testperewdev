@@ -172,6 +172,30 @@
     object-fit: contain;
 }
 
+/* Стили для неактивных кнопок (когда нет загруженных файлов) */
+.tab-action-btn:disabled,
+.ribbon-btn:disabled {
+    opacity: 0.5;
+    background: #e5e7eb;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.tab-action-btn:disabled:hover,
+.ribbon-btn:disabled:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    transform: none;
+    box-shadow: none;
+}
+
+.tab-action-btn:disabled img,
+.ribbon-btn:disabled img {
+    opacity: 0.5;
+}
+
 .shapes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
