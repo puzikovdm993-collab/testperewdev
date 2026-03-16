@@ -220,6 +220,7 @@ function createBlankFile(filename) {
     }
     
     updateOpenFilesList();
+    updateButtonsState();
     return file;
 }
 
@@ -260,6 +261,7 @@ function createFileFromImage(filename, img) {
     fitImageToScreen();
     
     updateOpenFilesList();
+    updateButtonsState();
     return file;
 }
 
@@ -347,6 +349,7 @@ function closeFile(fileId, event) {
     }
     
     updateOpenFilesList();
+    updateButtonsState();
 }
 
 // Обновление списка открытых файлов в выпадающем списке
@@ -2828,4 +2831,65 @@ function updateTabsFileField() {
             tabsFileName.textContent = 'Безымянный';
         }
     }
+}
+
+// Обновление состояния кнопок (активные/неактивные в зависимости от наличия файлов)
+function updateButtonsState() {
+    const hasFiles = openFiles.length > 0;
+    
+    // Получаем все кнопки действий
+    const allActionButtons = document.querySelectorAll('.tab-action-btn, .ribbon-btn, .footer-btn');
+    
+    allActionButtons.forEach(btn => {
+        // Пропускаем кнопки открытия и сохранения файлов
+        if (btn.onclick && (
+            btn.onclick.toString().includes('showLoadMethodModal') ||
+            btn.onclick.toString().includes('showSaveMethodModal') ||
+            btn.onclick.toString().includes('openAllImages')
+        )) {
+            return;
+        }
+        
+        // Блокируем или разблокируем кнопки в зависимости от наличия файлов
+        if (!hasFiles) {
+            btn.disabled = true;
+        } else {
+            btn.disabled = false;
+        }
+    });
+    
+    // Отдельно обрабатываем кнопку "Закрыть все"
+    const closeAllBtn = document.querySelector('button[onclick="closeAllImages()"]');
+    if (closeAllBtn) {
+        closeAllBtn.disabled = !hasFiles;
+    }
+}
+
+// Закрыть все файлы
+function closeAllImages() {
+    if (openFiles.length === 0) {
+        return;
+    }
+    
+    // Закрываем все файлы кроме последнего
+    while (openFiles.length > 1) {
+        const fileToClose = openFiles[0];
+        if (fileToClose.canvas) {
+            fileToClose.canvas.remove();
+        }
+        openFiles.shift();
+    }
+    
+    // Закрываем последний файл
+    if (openFiles.length === 1) {
+        const lastFile = openFiles[0];
+        if (lastFile.canvas) {
+            lastFile.canvas.remove();
+        }
+        openFiles = [];
+        activeFileId = null;
+    }
+    
+    updateOpenFilesList();
+    updateButtonsState();
 }
