@@ -404,18 +404,28 @@ function updateOpenFilesList() {
     updateButtonsState();
 }
 
+// Конфигурация: список селекторов кнопок, которые нужно блокировать при отсутствии файлов
+// Редактируйте этот массив, чтобы добавлять или удалять кнопки из списка блокируемых
+const EDITING_BUTTONS_SELECTORS = [
+    '.tab-action-btn:not([onclick*="showLoadMethodModal"]):not([onclick*="showSaveMethodModal"])',
+    '.ribbon-btn:not(#openFilesDropdownBtn)'
+    // Добавьте сюда другие селекторы при необходимости, например:
+    // '#btn-crop',
+    // '#btn-rotate-left',
+    // '.my-custom-button-class'
+];
+
 // Обновление состояния кнопок (делает их неактивными если нет загруженных файлов)
 function updateButtonsState() {
     const hasFiles = openFiles.length > 0;
     
-    // Селекторы для всех кнопок которые должны быть неактивны без файлов
-    const buttonsToDisable = document.querySelectorAll(`
-        .tab-action-btn:not([onclick*="showLoadMethodModal"]):not([onclick*="showSaveMethodModal"]),
-        .ribbon-btn:not(#openFilesDropdownBtn)
-    `);
-    
-    buttonsToDisable.forEach(btn => {
-        btn.disabled = !hasFiles;
+    // Проходим по каждому селектору из конфигурируемого списка
+    EDITING_BUTTONS_SELECTORS.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        
+        elements.forEach(btn => {
+            btn.disabled = !hasFiles;
+        });
     });
 }
 
