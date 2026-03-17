@@ -480,3 +480,49 @@ window.zoomReset = zoomReset;
 window.showHistoryModal = showHistoryModal;
 window.showSettingsModal = showSettingsModal;
 window.showServerManager = showServerManager;
+
+// ===== TAB ПАНЕЛИ =====
+function initTabPanels() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+            
+            // Убираем активный класс у всех кнопок и панелей
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanels.forEach(p => p.classList.remove('active'));
+            
+            // Добавляем активный класс выбранной кнопке и панели
+            btn.classList.add('active');
+            const panel = document.getElementById(targetTab);
+            if (panel) {
+                panel.classList.add('active');
+            }
+            
+            // Показываем панель с инструментами
+            const panelsContainer = document.querySelector('.tab-panels');
+            if (panelsContainer) {
+                panelsContainer.classList.add('active');
+            }
+        });
+    });
+    
+    // Закрытие панели при клике вне её
+    document.addEventListener('click', (e) => {
+        const panelsContainer = document.querySelector('.tab-panels');
+        const tabMenu = document.querySelector('.tab-menu');
+        
+        if (panelsContainer && !panelsContainer.contains(e.target) && !tabMenu.contains(e.target)) {
+            panelsContainer.classList.remove('active');
+        }
+    });
+}
+
+// Добавляем инициализацию tab-панелей
+const originalInit = initInterface;
+initInterface = function() {
+    originalInit();
+    initTabPanels();
+}
