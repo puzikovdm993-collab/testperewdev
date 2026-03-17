@@ -509,17 +509,25 @@
     
     <!-- Основной контейнер с панелью инструментов и холстом -->
     <div class="main-container">
-<div class="toolbar-left">
-    <button class="tool-btn active" data-tool="profile" onclick="setTool('profile')" title="Профили">
-        <svg class="tool-icon"><use href="#icon-adjust"></use></svg>
-    </button>
-    <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо">
-        ⭕
-    </button>
-    <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение выделения">
-        ✂️
-    </button>
-</div>
+        <div class="toolbar-left">
+            <button class="tool-btn active" data-tool="profile" onclick="setTool('profile')" title="Профили">
+                <svg class="tool-icon"><use href="#icon-adjust"></use></svg>
+            </button>
+            <button class="tool-btn" data-tool="lasso" onclick="setTool('lasso')" title="Лассо">
+                ⭕
+            </button>
+            <button class="tool-btn" data-tool="move" onclick="setTool('move')" title="Перемещение выделения">
+                ✂️
+            </button>
+        </div>
+
+        <!-- Цветовая панель (Color Bar) -->
+        <div class="color-bar">
+            <span class="color-bar-label color-bar-label-max">Max</span>
+            <div class="color-bar-gradient" id="colorBarGradient"></div>
+            <span class="color-bar-label color-bar-label-min">Min</span>
+            <input type="color" id="colorBarPicker" style="display:none;">
+        </div>
 
         <!-- Область холста -->
         <div class="canvas-area" id="canvasArea">
