@@ -268,6 +268,86 @@ function getColormap(name) {
             const green = ((13.0 - 1.5 * x) * x * x * x + (-12.0 * x * x * x + 45.0 * x * x - 49.5 * x + 17.0) * x * x * x + (b - a) * x * x * x * x * x * x + a) / 255;
             const blue = ((b - a) * x * x * x * x * x * x + a) / 255;
             return { r: red, g: green, b: blue }; // Ключи объекта не конфликтуют
+        },
+        // Новые RGB палитры
+        'plasma': (t) => {
+            // Plasma: от синего через фиолетовый к желтому
+            const r = Math.min(255, Math.max(0, Math.round(240 * t + 50 * Math.sin(Math.PI * t))));
+            const g = Math.min(255, Math.max(0, Math.round(100 * t + 80 * Math.sin(Math.PI * 2 * t))));
+            const b = Math.min(255, Math.max(0, Math.round(200 * (1 - t) + 50 * Math.sin(Math.PI * t))));
+            return { r: r / 255, g: g / 255, b: b / 255 };
+        },
+        'inferno': (t) => {
+            // Inferno: от черного через красный к желтому
+            const r = Math.min(255, Math.max(0, Math.round(255 * Math.pow(t, 0.5))));
+            const g = Math.min(255, Math.max(0, Math.round(255 * Math.pow(t, 1.5))));
+            const b = Math.min(255, Math.max(0, Math.round(150 * (1 - t))));
+            return { r: r / 255, g: g / 255, b: b / 255 };
+        },
+        'magma': (t) => {
+            // Magma: от черного через розовый к белому
+            const r = Math.min(255, Math.max(0, Math.round(100 + 155 * t)));
+            const g = Math.min(255, Math.max(0, Math.round(50 + 100 * Math.pow(t, 1.5))));
+            const b = Math.min(255, Math.max(0, Math.round(100 + 100 * t)));
+            return { r: r / 255, g: g / 255, b: b / 255 };
+        },
+        'cividis': (t) => {
+            // Cividis: оптимизирована для дальтоников
+            const r = Math.min(255, Math.max(0, Math.round(50 + 200 * t)));
+            const g = Math.min(255, Math.max(0, Math.round(70 + 150 * t)));
+            const b = Math.min(255, Math.max(0, Math.round(100 + 120 * t)));
+            return { r: r / 255, g: g / 255, b: b / 255 };
+        },
+        'rainbow': (t) => {
+            // Rainbow: классическая радуга
+            const h = 360 * t;
+            const s = 1, l = 0.5;
+            const c = (1 - Math.abs(2 * l - 1)) * s;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = l - c / 2;
+            let r, g, b;
+            if (h < 60) { r = c; g = x; b = 0; }
+            else if (h < 120) { r = x; g = c; b = 0; }
+            else if (h < 180) { r = 0; g = c; b = x; }
+            else if (h < 240) { r = 0; g = x; b = c; }
+            else if (h < 300) { r = x; g = 0; b = c; }
+            else { r = c; g = 0; b = x; }
+            return { r: r + m, g: g + m, b: b + m };
+        },
+        'coolwarm': (t) => {
+            // Coolwarm: от синего через белый к красному
+            const r = t < 0.5 ? 0.5 + 0.5 * (t * 2) : 0.5 + 0.5 * ((t - 0.5) * 2);
+            const g = 0.5 + 0.3 * Math.sin(Math.PI * t);
+            const b = t < 0.5 ? 0.5 + 0.5 * ((0.5 - t) * 2) : 0.5 - 0.5 * ((t - 0.5) * 2);
+            return { r: Math.min(1, Math.max(0, r)), g: Math.min(1, Math.max(0, g)), b: Math.min(1, Math.max(0, b)) };
+        },
+        'spring': (t) => {
+            // Spring: от зеленого к голубому
+            const r = 0;
+            const g = 1;
+            const b = t;
+            return { r: r, g: g, b: b };
+        },
+        'summer': (t) => {
+            // Summer: от зеленого к синему
+            const r = 0;
+            const g = 0.5 + 0.5 * t;
+            const b = 0.5 + 0.5 * (1 - t);
+            return { r: r, g: g, b: b };
+        },
+        'autumn': (t) => {
+            // Autumn: от красного к желтому
+            const r = 1;
+            const g = t;
+            const b = 0;
+            return { r: r, g: g, b: b };
+        },
+        'winter': (t) => {
+            // Winter: от синего к зеленому
+            const r = 0;
+            const g = t;
+            const b = 1;
+            return { r: r, g: g, b: b };
         }
     };
 
