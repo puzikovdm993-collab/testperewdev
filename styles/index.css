@@ -612,6 +612,27 @@ body {
     pointer-events: none;
 }
 
+/* Метки для цветовой панели */
+.color-bar-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding: 8px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.color-bar-label-max {
+    transform: rotate(180deg);
+}
+
+.color-bar-label-min {
+    transform: rotate(0deg);
+}
+
 .tool-btn {
     width: 48px;
     height: 48px;
