@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTIS - Workspace for Technical Image Processing</title>
+    <link rel="stylesheet" href="styles/new-interface.css">
+</head>
+<body>
+    <!-- Верхняя панель инструментов -->
+    <header class="top-bar">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <path d="M21 15l-5-5L5 21"/>
+                </svg>
+            </div>
+            <h1 class="app-title">WTIS</h1>
+        </div>
+
+        <nav class="main-menu">
+            <div class="menu-dropdown">
+                <button class="menu-btn">Файл</button>
+                <div class="dropdown-panel">
+                    <button class="dropdown-item" data-action="new">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                        Новый файл
+                        <span class="shortcut">Ctrl+N</span>
+                    </button>
+                    <button class="dropdown-item" data-action="open">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+                        Открыть...
+                        <span class="shortcut">Ctrl+O</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-action="save">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v13a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></span>
+                        Сохранить
+                        <span class="shortcut">Ctrl+S</span>
+                    </button>
+                    <button class="dropdown-item" data-action="save-as">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v13a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></span>
+                        Сохранить как...
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-action="export-image">
+                        <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+                        Экспорт изображения
+                    </button>
+                    <button class="dropdown-item" data-action="export-matrix">
+                        <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="3"/></svg></span>
+                        Экспорт матрицы
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-action="cloud-open">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><polyline points="12 14 12 10 8 14"/></svg></span>
+                        Открыть из облака
+                    </button>
+                    <button class="dropdown-item" data-action="cloud-save">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><polyline points="12 10 12 14 16 10"/></svg></span>
+                        Сохранить в облако
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-dropdown">
+                <button class="menu-btn">Правка</button>
+                <div class="dropdown-panel">
+                    <button class="dropdown-item" data-action="undo">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg></span>
+                        Отменить
+                        <span class="shortcut">Ctrl+Z</span>
+                    </button>
+                    <button class="dropdown-item" data-action="redo">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 3.7"/></svg></span>
+                        Повторить
+                        <span class="shortcut">Ctrl+Y</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-action="cut">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></span>
+                        Вырезать
+                        <span class="shortcut">Ctrl+X</span>
+                    </button>
+                    <button class="dropdown-item" data-action="copy">
+                        <span class="icon"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+                        Копировать
+                        <span class="shortcut">Ctrl+C</span>
+                    </button>
+                    <button class="dropdown-item" data-action="paste">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></span>
+                        Вставить
+                        <span class="shortcut">Ctrl+V</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-action="history">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                        История действий
+                        <span class="shortcut">Ctrl+H</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-dropdown">
+                <button class="menu-btn">Изображение</button>
+                <div class="dropdown-panel">
+                    <button class="dropdown-item" data-action="crop-selection">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg></span>
+                        Обрезать по выделению
+                    </button>
+                    <button class="dropdown-item" data-action="crop-content">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span>
+                        Обрезать по содержимому
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-submenu">
+                        <button class="dropdown-item submenu-trigger">
+                            <span class="icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
+                            Повернуть
+                        </button>
+                        <div class="dropdown-panel submenu">
+                            <button class="dropdown-item" data-action="rotate-90-cw">
+                                <span class="icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
+                                На 90° по часовой
+                            </button>
+                            <button class="dropdown-item" data-action="rotate-90-ccw">
+                                <span class="icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.12-9.36L1 10"/></svg></span>
+                                На 90° против часовой
+                            </button>
+                            <button class="dropdown-item" data-action="rotate-180">
+                                <span class="icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 17-1"/></svg></span>
+                                На 180°
+                            </button>
+                        </div>
+                    </div>
+                    <div class="dropdown-submenu">
+                        <button class="dropdown-item submenu-trigger">
+                            <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></span>
+                            Отразить
+                        </button>
+                        <div class="dropdown-panel submenu">
+                            <button class="dropdown-item" data-action="flip-horizontal">
+                                <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></span>
+                                По горизонтали
+                            </button>
+                            <button class="dropdown-item" data-action="flip-vertical">
+                                <span class="icon"><svg viewBox="0 0 24 24"><path d="M2 12h20M12 2v20"/></svg></span>
+                                По вертикали
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-dropdown">
+                <button class="menu-btn">Фильтры</button>
+                <div class="dropdown-panel">
+                    <div class="dropdown-submenu">
+                        <button class="dropdown-item submenu-trigger">
+                            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></span>
+                            Выделение контуров
+                        </button>
+                        <div class="dropdown-panel submenu">
+                            <button class="dropdown-item" data-action="filter-edge">Контур</button>
+                            <button class="dropdown-item" data-action="filter-sobel">Фильтр Собеля</button>
+                            <button class="dropdown-item" data-action="filter-relief">Рельеф</button>
+                        </div>
+                    </div>
+                    <div class="dropdown-submenu">
+                        <button class="dropdown-item submenu-trigger">
+                            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+                            Поиск объектов
+                        </button>
+                        <div class="dropdown-panel submenu">
+                            <button class="dropdown-item" data-action="detect-circle">Поиск окружности</button>
+                            <button class="dropdown-item" data-action="detect-center">Центральный детектор</button>
+                            <button class="dropdown-item" data-action="detect-axis">Ось симметрии</button>
+                        </div>
+                    </div>
+                    <div class="dropdown-submenu">
+                        <button class="dropdown-item submenu-trigger">
+                            <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 8v8M8 12h8"/></svg></span>
+                            Предобработка
+                        </button>
+                        <div class="dropdown-panel submenu">
+                            <button class="dropdown-item" data-action="preprocess-approximation">Аппроксимация поверхностью</button>
+                            <button class="dropdown-item" data-action="preprocess-logarithm">Логарифмическая обработка</button>
+                            <button class="dropdown-item" data-action="preprocess-median">Медианный фильтр</button>
+                            <button class="dropdown-item" data-action="preprocess-plane">Вычисление плоскости</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-dropdown">
+                <button class="menu-btn">Вид</button>
+                <div class="dropdown-panel">
+                    <button class="dropdown-item" data-action="zoom-in">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+                        Увеличить
+                        <span class="shortcut">Ctrl++</span>
+                    </button>
+                    <button class="dropdown-item" data-action="zoom-out">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+                        Уменьшить
+                        <span class="shortcut">Ctrl+-</span>
+                    </button>
+                    <button class="dropdown-item" data-action="zoom-reset">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                        100%
+                        <span class="shortcut">Ctrl+0</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-action="toggle-grid">
+                        <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></span>
+                        Сетка
+                    </button>
+                    <button class="dropdown-item" data-action="toggle-rulers">
+                        <span class="icon"><svg viewBox="0 0 24 24"><path d="M2 12h20M2 6h20M2 18h20"/></svg></span>
+                        Линейки
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-dropdown">
+                <button class="menu-btn">Сервис</button>
+                <div class="dropdown-panel">
+                    <button class="dropdown-item" data-action="server-manager">
+                        <span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg></span>
+                        Управление сервером
+                    </button>
+                    <button class="dropdown-item" data-action="settings">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+                        Настройки
+                    </button>
+                    <button class="dropdown-item" data-action="about">
+                        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+                        О программе
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="quick-actions">
+            <button class="quick-btn" title="Отменить" data-action="undo">
+                <svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+            </button>
+            <button class="quick-btn" title="Повторить" data-action="redo">
+                <svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 3.7"/></svg>
+            </button>
+            <div class="quick-separator"></div>
+            <button class="quick-btn" title="Увеличить" data-action="zoom-in">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button class="quick-btn" title="Уменьшить" data-action="zoom-out">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <span class="zoom-level">100%</span>
+        </div>
+    </header>
+
+    <!-- Основная рабочая область -->
+    <div class="workspace">
+        <!-- Левая панель инструментов -->
+        <aside class="toolbar-left">
+            <div class="tool-group">
+                <button class="tool-btn active" data-tool="select" title="Выделение (V)">
+                    <svg viewBox="0 0 24 24"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="move" title="Перемещение (H)">
+                    <svg viewBox="0 0 24 24"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="crop" title="Обрезка (C)">
+                    <svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+                </button>
+            </div>
+
+            <div class="tool-group">
+                <button class="tool-btn" data-tool="brush" title="Кисть (B)">
+                    <svg viewBox="0 0 24 24"><path d="M18 13.5c0 2.5-2 4.5-4.5 4.5S9 16 9 13.5 11 9 13.5 9 18 11 18 13.5z"/><path d="M13.5 9V5c0-1.1.9-2 2-2s2 .9 2 2v4"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="eraser" title="Ластик (E)">
+                    <svg viewBox="0 0 24 24"><path d="M20 20H7L3 16c-.8-.8-.8-2 0-2.8L14.8 1.4c.8-.8 2-.8 2.8 0l5 5c.8.8.8 2 0 2.8L11 20"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="fill" title="Заливка (G)">
+                    <svg viewBox="0 0 24 24"><path d="M19 11.5s-2 2.17-2 3.5a2 2 0 0 0 4 0c0-1.33-2-3.5-2-3.5z"/><path d="M5.5 5.5L12 12"/><path d="M12 12l6.5 6.5a2.12 2.12 0 0 1-3 3L9 15l-3.5 3.5a2.12 2.12 0 0 1-3-3L9 9l-3.5-3.5a2.12 2.12 0 0 1 3-3z"/></svg>
+                </button>
+            </div>
+
+            <div class="tool-group">
+                <button class="tool-btn" data-tool="rectangle" title="Прямоугольник (R)">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="ellipse" title="Эллипс (O)">
+                    <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="8"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="lasso" title="Лассо (L)">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12 6v6l4 2"/></svg>
+                </button>
+            </div>
+
+            <div class="tool-group">
+                <button class="tool-btn" data-tool="eyedropper" title="Пипетка (I)">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 12l3 7 7-3 10-10-10-10z"/><path d="M15 6l3 3"/></svg>
+                </button>
+                <button class="tool-btn" data-tool="measure" title="Измерение (M)">
+                    <svg viewBox="0 0 24 24"><path d="M2 12h20M2 6h20M2 18h20"/><path d="M6 2v20M18 2v20"/></svg>
+                </button>
+            </div>
+
+            <div class="color-picker-container">
+                <div class="color-preview" id="foregroundColor" style="background-color: #000000;"></div>
+                <input type="color" id="colorPicker" value="#000000" title="Цвет переднего плана">
+                <div class="color-swatch" style="background-color: #ff0000;" data-color="#ff0000"></div>
+                <div class="color-swatch" style="background-color: #00ff00;" data-color="#00ff00"></div>
+                <div class="color-swatch" style="background-color: #0000ff;" data-color="#0000ff"></div>
+                <div class="color-swatch" style="background-color: #ffff00;" data-color="#ffff00"></div>
+                <div class="color-swatch" style="background-color: #ffffff;" data-color="#ffffff"></div>
+            </div>
+        </aside>
+
+        <!-- Центральная область с холстом -->
+        <main class="canvas-area">
+            <div class="canvas-container" id="canvasContainer">
+                <div class="canvas-wrapper">
+                    <canvas id="mainCanvas" width="800" height="600"></canvas>
+                    <canvas id="overlayCanvas" width="800" height="600"></canvas>
+                </div>
+            </div>
+            
+            <!-- Индикатор состояния -->
+            <div class="status-bar">
+                <span class="status-info" id="canvasInfo">800 × 600 px</span>
+                <span class="status-separator">|</span>
+                <span class="cursor-position" id="cursorPosition">X: 0, Y: 0</span>
+                <span class="status-separator">|</span>
+                <span class="zoom-info" id="zoomInfo">100%</span>
+                <span class="status-separator">|</span>
+                <span class="memory-usage" id="memoryUsage">Память: 0 MB</span>
+            </div>
+        </main>
+
+        <!-- Правая панель свойств -->
+        <aside class="properties-panel">
+            <div class="panel-section">
+                <h3 class="panel-title">Слои</h3>
+                <div class="layers-list" id="layersList">
+                    <div class="layer-item active">
+                        <div class="layer-visibility">
+                            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <div class="layer-thumbnail">
+                            <canvas width="40" height="30"></canvas>
+                        </div>
+                        <span class="layer-name">Фон</span>
+                        <div class="layer-lock">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-controls">
+                    <button class="icon-btn" title="Добавить слой">
+                        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                    </button>
+                    <button class="icon-btn" title="Удалить слой">
+                        <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                    <button class="icon-btn" title="Дублировать слой">
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">Свойства инструмента</h3>
+                <div class="property-group">
+                    <label class="property-label">Размер</label>
+                    <div class="property-control">
+                        <input type="range" min="1" max="100" value="10" class="slider" id="toolSize">
+                        <span class="property-value" id="toolSizeValue">10</span>
+                    </div>
+                </div>
+                <div class="property-group">
+                    <label class="property-label">Непрозрачность</label>
+                    <div class="property-control">
+                        <input type="range" min="0" max="100" value="100" class="slider" id="toolOpacity">
+                        <span class="property-value" id="toolOpacityValue">100%</span>
+                    </div>
+                </div>
+                <div class="property-group">
+                    <label class="property-label">Жесткость</label>
+                    <div class="property-control">
+                        <input type="range" min="0" max="100" value="100" class="slider" id="toolHardness">
+                        <span class="property-value" id="toolHardnessValue">100%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">Гистограмма</h3>
+                <div class="histogram-container" id="histogramContainer">
+                    <canvas id="histogramCanvas" width="200" height="100"></canvas>
+                </div>
+                <div class="histogram-controls">
+                    <button class="btn-small" data-action="auto-levels">Авто уровни</button>
+                    <button class="btn-small" data-action="auto-contrast">Авто контраст</button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">Настройки цвета</h3>
+                <div class="property-group">
+                    <label class="property-label">Яркость</label>
+                    <div class="property-control">
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="brightness">
+                        <span class="property-value" id="brightnessValue">0</span>
+                    </div>
+                </div>
+                <div class="property-group">
+                    <label class="property-label">Контраст</label>
+                    <div class="property-control">
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="contrast">
+                        <span class="property-value" id="contrastValue">0</span>
+                    </div>
+                </div>
+                <div class="property-group">
+                    <label class="property-label">Насыщенность</label>
+                    <div class="property-control">
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="saturation">
+                        <span class="property-value" id="saturationValue">0</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Нижняя панель вкладок файлов -->
+    <footer class="tabs-bar">
+        <div class="tabs-list" id="tabsList">
+            <div class="tab-item active">
+                <span class="tab-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+                </span>
+                <span class="tab-name">Без названия-1</span>
+                <button class="tab-close">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+        <button class="new-tab-btn" title="Новый файл">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+    </footer>
+
+    <!-- Модальное окно истории -->
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h2>История действий</h2>
+                <button class="modal-close" data-modal="historyModal">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="history-timeline" id="historyTimeline">
+                    <!-- Элементы истории будут добавлены динамически -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal="historyModal">Закрыть</button>
+                <button class="btn btn-primary" data-action="clear-history">Очистить историю</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно настроек -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-window modal-large">
+            <div class="modal-header">
+                <h2>Настройки</h2>
+                <button class="modal-close" data-modal="settingsModal">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="general">Основные</button>
+                    <button class="settings-tab" data-tab="performance">Производительность</button>
+                    <button class="settings-tab" data-tab="cloud">Облако</button>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-panel active" id="generalSettings">
+                        <div class="setting-group">
+                            <label class="setting-label">Язык интерфейса</label>
+                            <select class="setting-select">
+                                <option value="ru">Русский</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label class="setting-label">Тема оформления</label>
+                            <select class="setting-select">
+                                <option value="dark">Тёмная</option>
+                                <option value="light">Светлая</option>
+                                <option value="system">Системная</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label class="setting-label">Формат файла по умолчанию</label>
+                            <select class="setting-select">
+                                <option value="tpt">TPT</option>
+                                <option value="png">PNG</option>
+                                <option value="jpg">JPG</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-panel" id="performanceSettings">
+                        <div class="setting-group">
+                            <label class="setting-label">Использование GPU</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-group">
+                            <label class="setting-label">Максимум памяти (MB)</label>
+                            <input type="number" class="setting-input" value="2048">
+                        </div>
+                    </div>
+                    <div class="settings-panel" id="cloudSettings">
+                        <div class="setting-group">
+                            <label class="setting-label">MinIO Endpoint</label>
+                            <input type="text" class="setting-input" value="127.0.0.1:9000">
+                        </div>
+                        <div class="setting-group">
+                            <label class="setting-label">Access Key</label>
+                            <input type="password" class="setting-input" value="minioadmin">
+                        </div>
+                        <div class="setting-group">
+                            <label class="setting-label">Bucket</label>
+                            <input type="text" class="setting-input" value="test">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal="settingsModal">Отмена</button>
+                <button class="btn btn-primary" data-action="save-settings">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/new-interface.js"></script>
+</body>
+</html>

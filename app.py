@@ -686,10 +686,10 @@ def viewIcons():
 
 @app.route('/new_int')
 def viewNewInterface():
-    # Отдаём incon из корня проекта
-    if not os.path.exists('test2_0.html'):
+    # Отдаём новый интерфейс из корня проекта
+    if not os.path.exists('new_interface.html'):
         abort(404)
-    return send_from_directory('.', 'test2_0.html')
+    return send_from_directory('.', 'new_interface.html')
 
 
 if __name__ == '__main__':
