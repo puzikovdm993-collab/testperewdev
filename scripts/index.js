@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
     updateToolInfo();
     initRecentFiles();
     
+    // Инициализация цветовой панели (Color Bar)
+    initColorBar();
+    
     // Инициализируем состояние кнопок при загрузке (когда файлов еще нет)
     updateButtonsState();
     

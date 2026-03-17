@@ -84,6 +84,96 @@ function setTool(tool) {
 }
 
 // ============ Управление цветами ============
+
+// Инициализация цветовой панели (Color Bar)
+function initColorBar() {
+    const gradient = document.getElementById('colorBarGradient');
+    const picker = document.getElementById('colorBarPicker');
+    
+    if (!gradient || !picker) return;
+    
+    // Обработка клика по градиенту - открытие пикера
+    gradient.addEventListener('click', () => {
+        currentColorTarget = 'primary';
+        picker.value = primaryColor;
+        picker.click();
+    });
+    
+    // Обработка изменения цвета в пикере
+    picker.addEventListener('input', (e) => {
+        setPrimaryColor(e.target.value);
+    });
+    
+    // Обработка движения мыши по градиенту для выбора цвета
+    let isDragging = false;
+    
+    gradient.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        selectColorFromGradient(e, gradient);
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const rect = gradient.getBoundingClientRect();
+        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            selectColorFromGradient(e, gradient);
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+}
+
+// Выбор цвета из градиента на основе позиции Y
+function selectColorFromGradient(e, gradient) {
+    const rect = gradient.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    const height = rect.height;
+    const ratio = 1 - (y / height); // Инвертируем, т.к. градиент сверху вниз
+    
+    // Создаём временный canvas для получения цвета из градиента
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = 1;
+    tempCanvas.height = height;
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    // Воспроизводим тот же градиент
+    const grad = tempCtx.createLinearGradient(0, 0, 0, height);
+    grad.addColorStop(0, '#ff0000');
+    grad.addColorStop(0.17, '#ffff00');
+    grad.addColorStop(0.33, '#00ff00');
+    grad.addColorStop(0.5, '#00ffff');
+    grad.addColorStop(0.67, '#0000ff');
+    grad.addColorStop(0.83, '#ff00ff');
+    grad.addColorStop(1, '#ff0000');
+    
+    tempCtx.fillStyle = grad;
+    tempCtx.fillRect(0, 0, 1, height);
+    
+    // Получаем цвет в нужной позиции
+    const imageData = tempCtx.getImageData(0, y, 1, 1).data;
+    const color = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
+    
+    // Конвертируем в hex
+    const hex = rgbToHex(imageData[0], imageData[1], imageData[2]);
+    setPrimaryColor(hex);
+    
+    // Обновляем позицию маркера
+    const marker = gradient.querySelector('.color-bar-marker');
+    if (marker) {
+        marker.style.top = `${y - 2}px`;
+    }
+}
+
+// Конвертация RGB в HEX
+function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(x => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    }).join('');
+}
+
 function setPrimaryColor(color) {
     primaryColor = color;
     const primaryColorElement = document.getElementById('primaryColor');
