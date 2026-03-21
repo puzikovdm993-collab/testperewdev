@@ -1,29 +1,62 @@
-# Examples 1:
-(empty — output nothing)
-
-# Example 2 (Project with artifacts):
-# Compiled and build artifacts
-*.pyc
-__pycache__/
-*.o
-*.obj
-dist/
-build/
+```
 # Dependencies
-.venv/
-venv/
-node_modules/
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-# Environment
-.env
-.env.local
-.env.*
-# Editors
-.vscode/
-.idea/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py~
+*.py.class
+*.py.backup
+*.py.swp
+*.py.swo
+*.py.tmp
+*.py.log
+*.py.err
+*.py.out
+*.py.cache
+*.py.compiled
+*.py.bak
+*.py~
 
-# Original rules preserved
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Build artifacts
+build/
+dist/
+*.egg
+*.egg-info/
+.installed.cfg
+*.egg-link
+*.eggs/
+.coverage
+htmlcov/
+.coverage.*
+.tox/
+.nox/
+.pytest_cache/
+.mypy_cache/
+.hypothesis/
+*.pot
+*.pot.*
+*.mo
+*.mo.*
 *.log
+
+# FastAPI specific
+*.db
+*.db-journal
+
+# General
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.log
+.DS_Store
+```
