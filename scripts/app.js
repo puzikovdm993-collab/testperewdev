@@ -455,6 +455,88 @@ async function _medianFilter(matrix, kernelSize) {
         : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
+/**
+ * Поворачивает матрицу данных на произвольный угол.
+ * @param {number[][]} matrix - Входная матрица (массив массивов).
+ * @param {number} width - Ширина матрицы.
+ * @param {number} height - Высота матрицы.
+ * @param {number} angleDegrees - Угол поворота в градусах.
+ * @returns {Object} - Объект с повернутой матрицей и новыми размерами.
+ */
+function _rotateMatrix(matrix, width, height, angleDegrees) {
+    // Преобразуем угол в радианы
+    const angleRad = angleDegrees * Math.PI / 180;
+    const sin = Math.sin(angleRad);
+    const cos = Math.cos(angleRad);
+    
+    // Вычисляем новые размеры после поворота
+    const newWidth = Math.floor(Math.abs(width * cos) + Math.abs(height * sin));
+    const newHeight = Math.floor(Math.abs(width * sin) + Math.abs(height * cos));
+    
+    // Создаем новую матрицу для результата
+    const rotatedMatrix = Array(newHeight).fill(null).map(() => Array(newWidth).fill(0));
+    
+    // Центры исходной и новой матрицы
+    const centerX = (width - 1) / 2;
+    const centerY = (height - 1) / 2;
+    const newCenterX = (newWidth - 1) / 2;
+    const newCenterY = (newHeight - 1) / 2;
+    
+    // Проходим по каждому пикселю новой матрицы
+    for (let newY = 0; newY < newHeight; newY++) {
+        for (let newX = 0; newX < newWidth; newX++) {
+            // Вычисляем координаты в исходной матрице (обратное преобразование)
+            const dx = newX - newCenterX;
+            const dy = newY - newCenterY;
+            
+            // Обратный поворот
+            const srcX = centerX + dx * cos + dy * sin;
+            const srcY = centerY - dx * sin + dy * cos;
+            
+            // Билинейная интерполяция
+            if (srcX >= 0 && srcX < width - 1 && srcY >= 0 && srcY < height - 1) {
+                const x0 = Math.floor(srcX);
+                const y0 = Math.floor(srcY);
+                const x1 = x0 + 1;
+                const y1 = y0 + 1;
+                
+                const wx = srcX - x0;
+                const wy = srcY - y0;
+                
+                // Получаем значения четырех соседних пикселей
+                const q11 = matrix[y0][x0];
+                const q12 = matrix[y0][x1];
+                const q21 = matrix[y1][x0];
+                const q22 = matrix[y1][x1];
+                
+                // Билинейная интерполяция
+                const interpolatedValue = 
+                    q11 * (1 - wx) * (1 - wy) +
+                    q12 * wx * (1 - wy) +
+                    q21 * (1 - wx) * wy +
+                    q22 * wx * wy;
+                
+                rotatedMatrix[newY][newX] = interpolatedValue;
+            } else if (srcX >= 0 && srcX < width && srcY >= 0 && srcY < height) {
+                // Граничные значения - берем ближайший пиксель
+                const nearestX = Math.round(Math.max(0, Math.min(width - 1, srcX)));
+                const nearestY = Math.round(Math.max(0, Math.min(height - 1, srcY)));
+                rotatedMatrix[newY][newX] = matrix[nearestY][nearestX];
+            } else {
+                // За пределами изображения - оставляем 0 или можно задать другое значение
+                rotatedMatrix[newY][newX] = 0;
+            }
+        }
+    }
+    
+    return {
+        matrix: rotatedMatrix,
+        width: newWidth,
+        height: newHeight
+    };
+}
+
+
 
 
 
